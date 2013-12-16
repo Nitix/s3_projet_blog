@@ -35,6 +35,13 @@ echo "<b>Test 3 : modification de la categorie : </b><br/>" ;
 $c->description= "nouvelle descrption de la categorie de test";
 $c->update();
 
+foreach (Categorie::findAll() as $cat) {
+    echo "id : " . $cat->id . "<br/>" ;
+    echo "titre : " . $cat->titre . "<br/>" ;
+    echo "description : " . $cat->description . "<br/><br/>" ;
+
+}
+
 echo "<b>Test 4 : retrouver une categorie </b><br/>";
 $cm = Categorie::findById($c->id);
 echo "id : " . $cm->id . "<br/>" ;

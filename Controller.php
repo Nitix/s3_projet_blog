@@ -1,7 +1,7 @@
 <?php
 
-abstract class Controler
-{
-	abstract public function callAction();
+abstract class Controler {
 	
+	abstract public function callAction();
+
 }
