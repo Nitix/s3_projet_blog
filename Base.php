@@ -11,6 +11,7 @@ class Base
 				PDO::ERRMODE_EXCEPTION=>true,
 				PDO::ATTR_PERSISTENT => true)
 			);
+			$db->exec("SET CHARACTER SET utf8"); 
 			return $db;
 		}catch(PDOException $e) {
 			echo $e->getMessage();
