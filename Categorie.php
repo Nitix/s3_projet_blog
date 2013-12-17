@@ -99,7 +99,6 @@ class Categorie {
 		}
 		$emess = __CLASS__ . ": unknown member $attr_name (setAttr)";
 		throw new Exception($emess, 46);
-
 	}
 
 	/**
@@ -201,6 +200,9 @@ class Categorie {
 		
 		$d = $query->fetch(PDO::FETCH_BOTH);
 
+		if(empty($billets))
+			throw new Exception("Aucune donnée trouvée", 50);
+		
 		$cat = new Categorie();
 		$cat -> __set('id', $d['id']);
 		$cat -> __set('description', $d['description']);
@@ -233,6 +235,8 @@ class Categorie {
 			$cat -> __set('titre', $row['titre']);
 			$cats[] = $cat;
 		}
+		if(empty($cats))
+			throw new Exception("Aucune donnée trouvée", 50);
 		return $cats;
 	}
 
@@ -250,6 +254,8 @@ class Categorie {
 			$cat -> __set('titre', $row['titre']);
 			$cats[] = $cat;
 		}
+		if(empty($cats))
+			throw new Exception("Aucune donnée trouvée", 50);
 		return $cats;
 	}
 

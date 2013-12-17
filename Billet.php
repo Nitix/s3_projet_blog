@@ -221,14 +221,16 @@ class Billet {
 		$dbres = $query -> execute();
 		
 		$d = $query->fetch(PDO::FETCH_BOTH);
-
-		$cat = new Categorie();
-		$cat -> __set('id', $d['id']);
-		$cat -> __set('body', $d['body']);
-		$cat -> __set('titre', $d['titre']);
-		$cat -> __set('cat_id', $d['cat_id']);
-		$cat -> __set('date', $d['date']);
-		return $cat;
+		if(!$d)
+			throw new Exception("Aucune donnée trouvée", 50);
+			
+		$billet= new Billet();
+		$billet-> __set('id', $d['id']);
+		$billet-> __set('body', $d['body']);
+		$billet-> __set('titre', $d['titre']);
+		$billet-> __set('cat_id', $d['cat_id']);
+		$billet-> __set('date', $d['date']);
+		return $billet;
 	}
 
 	/**
@@ -248,16 +250,18 @@ class Billet {
 		$dbres = $query -> execute();
 		
 		$cats = array();
-		while($row = $query->fetch(PDO::FETCH_BOTH)){
-			$cat = new Categorie();
-			$cat -> __set('id', $d['id']);
-			$cat -> __set('body', $d['body']);
-			$cat -> __set('titre', $d['titre']);
-			$cat -> __set('cat_id', $d['cat_id']);
-			$cat -> __set('date', $d['date']);
-			$cats[] = $cat;
+		while($d = $query->fetch(PDO::FETCH_BOTH)){
+			$billet = new Billet();
+			$billet-> __set('id', $d['id']);
+			$billet-> __set('body', $d['body']);
+			$billet-> __set('titre', $d['titre']);
+			$billet-> __set('cat_id', $d['cat_id']);
+			$billet-> __set('date', $d['date']);
+			$billets[] = $billet;
 		}
-		return $cats;
+		if(empty($billets))
+			throw new Exception("Aucune donnée trouvée", 50);
+		return $billets;
 	}
 
 	public static function findByTitre($titre) {
@@ -266,16 +270,19 @@ class Billet {
 		$query -> bindParam(":titre", $titre, PDO::PARAM_STR);
 		$dbres = $query -> execute();
 
-		$cats = array();
-		while($row = $query->fetch(PDO::FETCH_BOTH)){
-			$cat -> __set('id', $d['id']);
-			$cat -> __set('body', $d['body']);
-			$cat -> __set('titre', $d['titre']);
-			$cat -> __set('cat_id', $d['cat_id']);
-			$cat -> __set('date', $d['date']);
-			$cats[] = $cat;
+		$billets = array();
+		while($d = $query->fetch(PDO::FETCH_BOTH)){
+			$billet = new Billet();
+			$billet-> __set('id', $d['id']);
+			$billet-> __set('body', $d['body']);
+			$billet-> __set('titre', $d['titre']);
+			$billet-> __set('cat_id', $d['cat_id']);
+			$billet-> __set('date', $d['date']);
+			$billets[] = $billet;
 		}
-		return $cats;
+		if(empty($billets))
+			throw new Exception("Aucune donnée trouvée", 50);			
+		return $billets;
 	}
 
 	public static function findByCat_ID($id) {
@@ -284,15 +291,18 @@ class Billet {
 		$query -> bindParam(":cat_id", $titre, PDO::PARAM_INT);
 		$dbres = $query -> execute();
 
-		$cats = array();
+		$billets = array();
 		while($row = $query->fetch(PDO::FETCH_BOTH)){
-			$cat -> __set('id', $d['id']);
-			$cat -> __set('body', $d['body']);
-			$cat -> __set('titre', $d['titre']);
-			$cat -> __set('cat_id', $d['cat_id']);
-			$cat -> __set('date', $d['date']);
-			$cats[] = $cat;
+			$billet = new Billet();
+			$billet-> __set('id', $d['id']);
+			$billet-> __set('body', $d['body']);
+			$billet-> __set('titre', $d['titre']);
+			$billet-> __set('cat_id', $d['cat_id']);
+			$billet-> __set('date', $d['date']);
+			$billets[] = $billet;
 		}
-		return $cats;
+		if(empty($billets))
+			throw new Exception("Aucune donnée trouvée", 50);
+		return $billets;
 	}
 }
