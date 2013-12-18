@@ -42,7 +42,7 @@ class Display
 		}catch(Exception $e){
 			$html .= '<p>'. $e->getMessage().'</p>';
 		}
-		$html .= '</article>';
+		$html .= '</section></article>';
 		return $html;
 	}
 	
@@ -84,7 +84,7 @@ class Display
 		try{
 			$billets = Billet::findAll();
 			foreach ($billets as $billet) {
-				$html .= '<a href="blog.php?a=detail&id'.$billet->__get('id').'">"'.$billet->__get('titre').'</a><br />';
+				$html .= '<a href="blog.php?a=detail&id'.$billet->__get('id').'">'.$billet->__get('titre').'</a><br />';
 			}
 		}catch(Exception $e){
 			$html .= $e->getMessage();
