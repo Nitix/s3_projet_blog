@@ -194,19 +194,19 @@ class Categorie {
 	public static function findById($id) {
 
 		$c = Base::getConnection();
-		$query = $c -> prepare("select * from categorie where id=?");
-		$query -> bindParam(1, $id, PDO::PARAM_INT);
+		$query = $c -> prepare("select * from categorie where id=:id");
+		$query -> bindParam(':id', $id, PDO::PARAM_INT);
 		$dbres = $query -> execute();
 		
-		$d = $query->fetch(PDO::FETCH_BOTH);
+		$row = $query->fetch(PDO::FETCH_BOTH);
 
-		if(empty($billets))
-			throw new Exception("Aucune donnée trouvée", 50);
+		if(empty($row))
+			throw new Exception("Aucune donnée trouvée", 51);
 		
 		$cat = new Categorie();
-		$cat -> __set('id', $d['id']);
-		$cat -> __set('description', $d['description']);
-		$cat -> __set('titre', $d['titre']);
+		$cat -> __set('id', $row['id']);
+		$cat -> __set('description', $row['description']);
+		$cat -> __set('titre', $row['titre']);
 
 		return $cat;
 	}
@@ -236,7 +236,7 @@ class Categorie {
 			$cats[] = $cat;
 		}
 		if(empty($cats))
-			throw new Exception("Aucune donnée trouvée", 50);
+			throw new Exception("Aucune donnée trouvée", 52);
 		return $cats;
 	}
 
@@ -255,7 +255,7 @@ class Categorie {
 			$cats[] = $cat;
 		}
 		if(empty($cats))
-			throw new Exception("Aucune donnée trouvée", 50);
+			throw new Exception("Aucune donnée trouvée", 53);
 		return $cats;
 	}
 

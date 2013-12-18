@@ -2,10 +2,20 @@
 
 class Display
 {
+	private $data;	
 	
-	public function __construct() {}
+	public function __construct($data) {
+		$this->data = $data;
+	} 
 	
-	public function displayPage($body, $left= '', $right =''){
+	public function displayPage($action){
+		try{
+			$body = $this->$action();
+		}catch(Exception $e){
+			echo "Line :".$e->getLine();
+			echo "Code :".$e->getCode();
+			$body = "Méthode d'affichage non correct";
+		}
 	echo '<!DOCTYPE html>
 	<html>
 		<head>
@@ -13,72 +23,84 @@ class Display
 			<link rel="stylesheet" href="css/site.css"/>
 		</head>
 		<body>
-			'.$left.$body.$right.'
+			'.$this->generateLeftMenu().$body.$this->generateRightMenu().'<br />
 			<footer>Ecris par Guillaume Pierson et Jordane Mahout</footer>
 		</body>
 	</html>';
 	}
 	
-	public function getBillet($id)
+	private function billet()
 	{
-		$html = '<section><article>';
-		try{
-			$billet = Billet::findById($id);
-			var_dump($billet);
+		$billet = $this->data;
+		$cat = Categorie::findById($billet->__get('cat_id'));
+		$html = '<section><article><h2>'.$billet->__get('titre').
+			'</h2><p>'.$billet->__get('body').'</p>Catégorie : <a href="blog.php?a=cat&id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article></section>';
+		return $html;
+	}
+	
+	private function listBillets()
+	{
+		$html = '<section><table><caption>Liste de tous les billets</caption><tr><th>Titre</th><th>Catégorie</th></tr>';
+		foreach ($this->data as $billet) {
 			$cat = Categorie::findById($billet->__get('cat_id'));
-			$html .= '<h2>'.$billet->__get('titre').
-				'</h2><p>'.$billet->__get('body').'</p><a href="blog.php?a=cat&id='.$cat->__get('id').'">'.$cat->__get('description').'</a>';
-		}catch(Exception $e){
-			$html .= '<p>'. $e->getMessage().'</p>';
+			$html .= '<tr><td><a href="blog.php?a=detail&id='.$billet->__get('id').'">"'.$billet->__get('titre').
+			'</a></td><td><a href="blog.php?a=cat&id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></td></tr>';
 		}
-		$html .= '</section></article>';
+		$html .= '</table></section>';
 		return $html;
 	}
 	
-	public function getAllBillets()
+	private function generateLeftMenu()
 	{
-		try{
-			$billets = Billet::findAll();
-			$html = '<section><table><caption>Liste de tous les billets</caption><tr><th>Titre</th><th>Catégorie</th></tr>';
-			foreach ($billets as $billet) {
-				$cat = Categorie::findById($billet->__get('cat_id'));
-				$html .= '<tr><td><a href="blog.php?a=detail&id'.$billet->__get('id').'">"'.$billet->__get('titre').
-				'</a></td><td><a href="blog.php?a=cat&id='.$cat->__get('id').'">'.$cat->__get('description').'</a></td></td>';
-			}
-			$html .= '</section>';
-		}catch(Exception $e){
-			$html = '<section>'. $e->getMessage().'</section>';
-		}
-		return $html;
-	}
-	
-	public function getLeftMenu()
-	{
-		$html = '<nav>';
+		$html = '<nav>Les Catégories<br />';
 		try{
 			$cats = Categorie::findAll();
 			foreach ($cats as $cat) {
-				$html .= '<a href="blog.php?a=cat&id='.$cat->__get('id').'">'.$cat->__get('description').'</a><br />';
+				$html .= '<a href="blog.php?a=cat&id='.$cat->__get('id').'">'.$cat->__get('titre').'</a><br />';
 			}
 		}catch(Exception $e){
-			$html .= $e->getMessage();
+			$html .= 'Erreur à la récupération des catégories';
 		}
 		$html .= '</nav>';
 		return $html;
 	}
 	
-	public function getRightMenu()
+	private function generateRightMenu()
 	{
-		$html = '<nav>';
+		$html = '<nav>Liste des 10 derniers billets<br />';
 		try{
-			$billets = Billet::findAll();
+			$billets = Billet::findLastLimited(10);
 			foreach ($billets as $billet) {
-				$html .= '<a href="blog.php?a=detail&id'.$billet->__get('id').'">'.$billet->__get('titre').'</a><br />';
+					$html .= '<a href="blog.php?a=detail&id='.$billet->__get('id').'">'.$billet->__get('titre').'</a><br />';
 			}
 		}catch(Exception $e){
-			$html .= $e->getMessage();
-		}		
+			$html .= 'Erreur à la récupération des catégories';
+		}
 		$html .= '</nav>';
 		return $html;
+	}
+	private function catDetail(){
+		$cat = Categorie::findById($this->data[0]->__get('id'));
+		$html = '<section><p>Liste de tous les billets dans la catégorie '.$cat->__get('titre').'</p>Desciption : '.$cat->__get('description').'<br /><ul>';
+		foreach ($this->data as $billet) {
+			$html .= '<li><a href="blog.php?a=detail&id='.$billet->__get('id').'">"'.$billet->__get('titre').'</a></li>';
+		}
+		$html .= '</ul></section>';
+		return $html;		
+	}
+	
+	private function allCat(){
+		$html = '<section><table><caption>Liste de toutes les catégories</caption><tr><th>Titre</th><th>Description</th></tr>';
+		foreach ($this->data as $billet) {
+			$cat = Categorie::findById($billet->__get('cat_id'));
+			$html .= '<tr><td><a href="blog.php?a=cat&id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></td>
+			<td>'.$cat->__get('description').'</a></td></td>';
+		}
+		$html .= '</section>';
+		return $html;
+	}
+	
+	private function error(){
+		return $this->data;
 	}
 }

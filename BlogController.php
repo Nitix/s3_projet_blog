@@ -2,22 +2,59 @@
 	
 class BlogController
 {
-	private $actions = array(
+	private static $actions = array(
 		'list' => 'listAction',
 		'detail' => 'detailAction',
 		'cat' => 'catAction'
 	);
 		
 	
-	public function listAction(){ }
+	public static function listAction(){
+		try{
+			$billets = Billet::findAll();
+			$display = new Display($billets);
+			$display->displayPage('listBillets');
+		}catch(Exception $e){
+			$error = 'Erreur lors de la récupération des billets';
+			$display = new Display($error);
+			$display->displayPage('error');
+		}
+	}
 	
-	public function detailAction(){}
+	public static function detailAction(){
+		try{
+			if(!isset($_GET['id']))
+				throw new Exception('Identifiant non valide');
+			$billets = Billet::findById($_GET['id']);
+			$display = new Display($billets);
+			$display->displayPage('billet');
+		}catch(Exception $e){
+			$error = 'Erreur lors de la récupération des billets';
+			$display = new Display($error);
+			$display->displayPage('error');
+		}
+	}
 	
-	public function catAction(){}
+	public static function catAction(){
+		try{
+			if(!isset($_GET['id']))
+				throw new Exception('Identifiant non valide');
+			$billets = Billet::findByCat_ID($_GET['id']);
+			$display = new Display($billets);
+			$display->displayPage('catDetail');
+		}catch(Exception $e){
+			$error = 'Erreur lors de la récupération des billets';
+			$display = new Display($error);
+			$display->displayPage('error');
+		}
+	}
 	
-	public function callAction($requete){
+	
+	public static function callAction($requete){
 		if(isset($requete['a'])){
-			$action = $this->actions[$requete['a']];
+			return BlogController::$actions[$requete['a']];
+		}else{
+			return 'listAction';
 		}
 	}
 }

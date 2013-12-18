@@ -220,16 +220,16 @@ class Billet {
 		$query -> bindParam(1, $id, PDO::PARAM_INT);
 		$dbres = $query -> execute();
 		
-		$d = $query->fetch(PDO::FETCH_BOTH);
-		if(!$d)
+		$row = $query->fetch(PDO::FETCH_BOTH);
+		if(!$row)
 			throw new Exception("Aucune donnée trouvée", 50);
 			
 		$billet= new Billet();
-		$billet-> __set('id', $d['id']);
-		$billet-> __set('body', $d['body']);
-		$billet-> __set('titre', $d['titre']);
-		$billet-> __set('cat_id', $d['cat_id']);
-		$billet-> __set('date', $d['date']);
+		$billet-> __set('id', $row['id']);
+		$billet-> __set('body', $row['body']);
+		$billet-> __set('titre', $row['titre']);
+		$billet-> __set('cat_id', $row['cat_id']);
+		$billet-> __set('date', $row['date']);
 		return $billet;
 	}
 
@@ -247,20 +247,20 @@ class Billet {
 
 		$c = Base::getConnection();
 		$query = $c -> prepare("select * from billets");
-		$dbres = $query -> execute();
+		$rowbres = $query -> execute();
 		
 		$cats = array();
-		while($d = $query->fetch(PDO::FETCH_BOTH)){
+		while($row = $query->fetch(PDO::FETCH_BOTH)){
 			$billet = new Billet();
-			$billet-> __set('id', $d['id']);
-			$billet-> __set('body', $d['body']);
-			$billet-> __set('titre', $d['titre']);
-			$billet-> __set('cat_id', $d['cat_id']);
-			$billet-> __set('date', $d['date']);
+			$billet-> __set('id', $row['id']);
+			$billet-> __set('body', $row['body']);
+			$billet-> __set('titre', $row['titre']);
+			$billet-> __set('cat_id', $row['cat_id']);
+			$billet-> __set('date', $row['date']);
 			$billets[] = $billet;
 		}
 		if(empty($billets))
-			throw new Exception("Aucune donnée trouvée", 50);
+			throw new Exception("Aucune donnée trouvée", 51);
 		return $billets;
 	}
 
@@ -271,38 +271,60 @@ class Billet {
 		$dbres = $query -> execute();
 
 		$billets = array();
-		while($d = $query->fetch(PDO::FETCH_BOTH)){
+		while($row = $query->fetch(PDO::FETCH_BOTH)){
 			$billet = new Billet();
-			$billet-> __set('id', $d['id']);
-			$billet-> __set('body', $d['body']);
-			$billet-> __set('titre', $d['titre']);
-			$billet-> __set('cat_id', $d['cat_id']);
-			$billet-> __set('date', $d['date']);
+			$billet-> __set('id', $row['id']);
+			$billet-> __set('body', $row['body']);
+			$billet-> __set('titre', $row['titre']);
+			$billet-> __set('cat_id', $row['cat_id']);
+			$billet-> __set('date', $row['date']);
 			$billets[] = $billet;
 		}
 		if(empty($billets))
-			throw new Exception("Aucune donnée trouvée", 50);			
+			throw new Exception("Aucune donnée trouvée", 52);			
 		return $billets;
 	}
 
 	public static function findByCat_ID($id) {
 		$c = Base::getConnection();
 		$query = $c -> prepare("select * from billets where cat_id = :cat_id");
-		$query -> bindParam(":cat_id", $titre, PDO::PARAM_INT);
+		$query -> bindParam(":cat_id", $id, PDO::PARAM_INT);
 		$dbres = $query -> execute();
 
 		$billets = array();
 		while($row = $query->fetch(PDO::FETCH_BOTH)){
 			$billet = new Billet();
-			$billet-> __set('id', $d['id']);
-			$billet-> __set('body', $d['body']);
-			$billet-> __set('titre', $d['titre']);
-			$billet-> __set('cat_id', $d['cat_id']);
-			$billet-> __set('date', $d['date']);
+			$billet-> __set('id', $row['id']);
+			$billet-> __set('body', $row['body']);
+			$billet-> __set('titre', $row['titre']);
+			$billet-> __set('cat_id', $row['cat_id']);
+			$billet-> __set('date', $row['date']);
 			$billets[] = $billet;
 		}
 		if(empty($billets))
-			throw new Exception("Aucune donnée trouvée", 50);
+			throw new Exception("Aucune donnée trouvée", 53);
+		return $billets;
+	}
+	
+
+	public static function findLastLimited($nb){
+		$c = Base::getConnection();
+		$query = $c -> prepare("select * from billets order by date LIMIT :nb");
+		$query -> bindParam(":nb", $nb, PDO::PARAM_INT);
+		$dbres = $query -> execute();
+
+		$billets = array();
+		while($row = $query->fetch(PDO::FETCH_BOTH)){
+			$billet = new Billet();
+			$billet-> __set('id', $row['id']);
+			$billet-> __set('body', $row['body']);
+			$billet-> __set('titre', $row['titre']);
+			$billet-> __set('cat_id', $row['cat_id']);
+			$billet-> __set('date', $row['date']);
+			$billets[] = $billet;
+		}
+		if(empty($billets))
+			throw new Exception("Aucune donnée trouvée", 54);
 		return $billets;
 	}
 }
