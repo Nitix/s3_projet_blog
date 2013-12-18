@@ -1,16 +1,5 @@
 <?php
 
-include 'Billet.php';
-include 'Base.php';
-include 'Categorie.php';
-
-$display = new Display();
-$left = $display->getLeftMenu();
-$right = $display->getRightMenu();
-$body = $display->getBillet(4);
-$display->displayPage($body, $left, $right);
-
-
 class Display
 {
 	
