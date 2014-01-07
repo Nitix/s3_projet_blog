@@ -1,7 +1,12 @@
 <?php
 
-abstract class Controler {
+abstract class Controller {
 	
-	abstract public function callAction();
-
+	public static function callAction($requete){
+		if(isset($requete['a'])){
+			return static::$actions[$requete['a']];
+		}else{
+			return 'listAction';
+		}
+	}
 }
