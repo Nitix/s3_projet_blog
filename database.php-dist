@@ -15,12 +15,12 @@ class Database
 	public static $database = '';
 		
 	/*
-	 * Utilisateur de la base de donée
+	 * Utilisateur de la base de donnée
 	 */
 	public static $user     = '';
 	
 	/*
-	 * Mot de passe de la base de donée
+	 * Mot de passe de la base de donnée
 	 */
 	public static $password = '';
 }
