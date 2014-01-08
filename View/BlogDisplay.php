@@ -21,7 +21,7 @@ class BlogDisplay extends Display
 		<head>
 			<meta charset="utf-8">
 			<title>Projet Blog</title>
-			<link rel="stylesheet" href="css/site.css"/>
+			<link rel="stylesheet" href="data/css/site.css"/>
 		</head>
 		<body>
 			'.$this->generateLeftMenu().$body.$this->generateRightMenu().'<br />

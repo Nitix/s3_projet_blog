@@ -24,7 +24,7 @@ class AdminDisplay extends Display {
 		<head>
 			<meta charset="utf-8">
 			<title>Administration</title>
-			<link rel="stylesheet" href="css/site.css"/>
+			<link rel="stylesheet" href="data/css/site.css"/>
 		</head>
 		<body>
 			'.$this->generateLeftMenu().$body.'<br />
