@@ -11,8 +11,8 @@ class Base {
 		} else {
 			try {
 				$database = new Database();
-				$dsn = "mysql:host=$database->host;dbname=$database->database";
-				$db = new PDO($dsn, $database -> user, $database -> password, array(PDO::ATTR_ERRMODE => true, PDO::ERRMODE_EXCEPTION => true, PDO::ATTR_PERSISTENT => true));
+				$dsn = "mysql:host=".Database::$host.";dbname=".Database::$database;
+				$db = new PDO($dsn, Database::$user, Database::$password, array(PDO::ATTR_ERRMODE => true, PDO::ERRMODE_EXCEPTION => true, PDO::ATTR_PERSISTENT => true));
 				$db -> exec("SET CHARACTER SET utf8");
 				return $db;
 			} catch(PDOException $e) {

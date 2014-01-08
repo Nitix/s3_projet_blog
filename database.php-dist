@@ -1,0 +1,11 @@
+<?php
+
+class Database
+{
+	public static $host     = '';
+	public static $database = '';
+	public static $user     = '';
+	public static $password = '';
+}
+
+?>
