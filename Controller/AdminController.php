@@ -4,16 +4,24 @@ class AdminController extends Controller
 {
 
 	protected static $actions = array(
-		'AddM' => 'AddMessage',
-		'saveM' => 'saveMessage',
-		'addC' => 'addCategorie',
-		'saveC' => 'saveCategorie'
+		'addM' 		=> 'AddMessage',
+		'saveM' 	=> 'saveMessage',
+		'addC' 		=> 'addCategorie',
+		'saveC' 	=> 'saveCategorie'
 	);
 	
-	public static function addMessage(){
-		$jeton = hash('sha-256', uniqid());
-		$_SESSION['jeton'] = $jeton;
-		$display = new AdminDisplay($jeton);
+	public static function home(){
+		$display = new AdminDisplay(null);
+		$display->displayPage('home');
+	} 
+	
+	public static function addMessage($error = '', $titre = '', $contenu = '' ){
+		$data['jeton']	 = hash('sha256', uniqid());
+		$data['contenu'] = $contenu;
+		$data['titre']   = $titre;
+		$data['error']	 = $error;
+		$_SESSION['jeton'] = $data['jeton'];
+		$display = new AdminDisplay($data);
 		$display->displayPage('newMessage');
 	}
 	
@@ -24,60 +32,42 @@ class AdminController extends Controller
 		if(isset($_POST['contenu']) && isset($_POST['titre']) && isset($_POST['cat_id']) && isset($_POST['jeton'])){
 			$data['contenu'] = htmlspecialchars($_POST['contenu']);
 			$data['titre']   = htmlspecialchars($_POST['titre']);			
-			if(!empty($contenu) && !empty($titre)){	
+			if(!empty($data['contenu']) && !empty($data['titre'])){	
 				if($_POST['jeton'] == $_SESSION['jeton']){ 	
-					$data['cat_id'] = $_POST['cat_id'];
+					$data['cat_id'] = intval($_POST['cat_id']);
 					try{
-						Categorie::findById($cat_id);
+						Categorie::findById($data['cat_id']);
 						try{
 							$billet = new Billet();
 							$billet->__set('titre', $data['titre']);
 							$billet->__set('body', $data['contenu']);
-							$billet->__set('cat_id', $data['contenu']);
+							$billet->__set('cat_id', $data['cat_id']);
 							$billet->__set('date', date("Y-m-d H:i:s"));
 							$res = $billet->insert();
 							if($res){
 								$display = new AdminDisplay($data);
 								$display->displayPage('messageEnregistre');	
 							}else{
-								$data['error'] = "Erreur lors de l'ajout";
-								$display = new AdminDisplay($data);
-								$display->displayPage('newMessageError');	
+								self::addMessage("Erreur lors de l'ajout", $data['titre'], $data['contenu']);
 							}
 						}catch(Exception $e){
-							$data['error'] = "Erreur lors de l'ajout";
-							$display = new AdminDisplay($data);
-							$display->displayPage('newMessageError');
+							self::addMessage("Erreur lors de l'ajout", $data['titre'], $data['contenu']);
 							
 						}
 					}catch(Exception $e){
-						$data['error'] = "Catégorie inexistante";
-						$display = new AdminDisplay($data);
-						$display->displayPage('newMessageError');
+						self::addMessage("Catégorie inexistante", $data['titre'], $data['contenu']);
 					}
 				}else{
-					$data['error'] = "Hackeur ?";
-					$display = new AdminDisplay($data);
-					$display->displayPage('newMessageError');
+					self::addMessage("Hackeur ?", $data['titre'], $data['contenu']);
 				}
 			}else{
-				$data['error'] = "Titre ou contenu vide";
-				$display = new AdminDisplay($data);
-				$display->displayPage('newMessageError');				
+				self::addMessage("Titre ou contenu vide", $data['titre'], $data['contenu']);
 			}
 		}else{
-			$data['error'] = "Hackeur ?";
-			$display = new AdminDisplay($data);
-			$display->displayPage('newMessageError');
+			self::addMessage("Hackeur ?");
 		}	
 	}
 	
-	public static function addCategorie(){
-		$jeton = hash('sha-256', uniqid());
-		$_SESSION['jeton'] = $jeton;
-		$display = new AdminDisplay($jeton);
-		$display->displayPage('newCategorie');
-	}
 	
 	public static function saveCategorie(){
 		$data['titre'] = '';
@@ -85,7 +75,7 @@ class AdminController extends Controller
 		if(isset($_POST['description']) && isset($_POST['titre']) && isset($_POST['jeton'])){
 			$data['description'] = htmlspecialchars($_POST['description']);
 			$data['titre']   = htmlspecialchars($_POST['titre']);			
-			if(!empty($contenu) && !empty($titre)){	
+			if(!empty($data['description']) && !empty($data['titre'])){	
 				if($_POST['jeton'] == $_SESSION['jeton']){ 	
 					try{
 						$categorie = new Categorie();

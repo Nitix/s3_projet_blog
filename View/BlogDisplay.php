@@ -17,8 +17,9 @@ class BlogDisplay extends Display
 			$body = "Méthode d'affichage non correct";
 		}
 	echo '<!DOCTYPE html>
-	<html>
+	<html lang="fr">
 		<head>
+			<meta charset="utf-8">
 			<title>Projet Blog</title>
 			<link rel="stylesheet" href="css/site.css"/>
 		</head>
@@ -43,7 +44,7 @@ class BlogDisplay extends Display
 		$html = '<section><table><caption>Liste de tous les billets</caption><tr><th>Titre</th><th>Catégorie</th></tr>';
 		foreach ($this->data as $billet) {
 			$cat = Categorie::findById($billet->__get('cat_id'));
-			$html .= '<tr><td><a href="blog.php?a=detail&id='.$billet->__get('id').'">"'.$billet->__get('titre').
+			$html .= '<tr><td><a href="blog.php?a=detail&id='.$billet->__get('id').'">'.$billet->__get('titre').
 			'</a></td><td><a href="blog.php?a=cat&id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></td></tr>';
 		}
 		$html .= '</table></section>';

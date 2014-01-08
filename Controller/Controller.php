@@ -2,11 +2,11 @@
 
 abstract class Controller {
 	
-	public static function callAction($requete){
-		if(isset($requete['a'])){
-			return static::$actions[$requete['a']];
+	public static function callAction(){
+		if(isset($_GET['a'])){
+			return static::$actions[$_GET['a']];
 		}else{
-			return 'listAction';
+			return 'home';
 		}
 	}
 }

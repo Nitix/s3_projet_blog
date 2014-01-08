@@ -3,11 +3,14 @@
 class BlogController extends Controller
 {
 	protected static $actions = array(
-		'list' => 'listAction',
-		'detail' => 'detailAction',
-		'cat' => 'catAction'
+		'list' 		=> 'listAction',
+		'detail' 	=> 'detailAction',
+		'cat' 		=> 'catAction'
 	);
 		
+	public static function home(){
+		self::listAction();
+	}
 	
 	public static function listAction(){
 		try{
