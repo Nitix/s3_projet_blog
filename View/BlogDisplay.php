@@ -68,7 +68,7 @@ class BlogDisplay extends Display
 	
 	private function generateRightMenu()
 	{
-		$html = '<nav>Liste des 10 derniers billets<br />';
+		$html = '<nav id="rightmenu">Liste des 10 derniers billets<br />';
 		try{
 			$billets = Billet::findLastLimited(10);
 			foreach ($billets as $billet) {
