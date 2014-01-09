@@ -66,6 +66,16 @@ class AdminController extends Controller
 			self::addMessage("Hackeur ?");
 		}	
 	}
+
+	public static function addCategorie($error = '', $titre = '', $description = '' ){
+		$data['description'] = $contenu;
+		$data['titre']   = $titre;
+		$data['error']	 = $error;
+		$data['jeton']	 = $_SESSION['jeton'];
+		$display = new AdminDisplay($data);
+		$display->displayPage('newCategorie');
+	}
+	
 	
 	
 	public static function saveCategorie(){
@@ -76,39 +86,24 @@ class AdminController extends Controller
 			$data['titre']   = htmlspecialchars($_POST['titre']);			
 			if(!empty($data['description']) && !empty($data['titre'])){	
 				if($_POST['jeton'] == $_SESSION['jeton']){ 	
-					try{
-						$categorie = new Categorie();
-						$categorie->__set('titre', $data['titre']);
-						$categorie->__set('description', $data['description']);
-						$res = $categorie->insert();
-						if($res){
-							$display = new AdminDisplay($data);
-							$display->displayPage('categorieEnregistre');	
-						}else{
-							$data['error'] = "Erreur lors de l'ajout";
-							$display = new AdminDisplay($data);
-							$display->displayPage('newCategorieError');	
-						}
-					}catch(Exception $e){
-						$data['error'] = "Erreur lors de l'ajout";
+					$categorie = new Categorie();
+					$categorie->__set('titre', $data['titre']);
+					$categorie->__set('description', $data['description']);
+					$res = $categorie->insert();
+					if($res){
 						$display = new AdminDisplay($data);
-						$display->displayPage('newCategorieError');
-						
+						$display->displayPage('categorieEnregistre');	
+					}else{
+						self::addCategorie("Erreur lors de l'ajout", $data['titre'], $data['description']);
 					}
 				}else{
-					$data['error'] = "Hackeur ?";
-					$display = new AdminDisplay($data);
-					$display->displayPage('newCategorieError');
+					self::addCategorie("Hackeur ?", $data['titre'], $data['description']);
 				}
 			}else{
-				$data['error'] = "Titre ou description vide";
-				$display = new AdminDisplay($data);
-				$display->displayPage('newCategorieError');				
+				self::addCategorie("Titre ou description vide", $data['titre'], $data['description']);	
 			}
 		}else{
-			$data['error'] = "Hackeur ?";
-			$display = new AdminDisplay($data);
-			$display->displayPage('newCategorieError');
+			self::addCategorie("Hackeur ?", $data['titre'], $data['description']);
 		}	
 	}
 }
