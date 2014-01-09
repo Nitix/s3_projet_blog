@@ -79,7 +79,7 @@ class AdminDisplay extends Display {
 			<label for="titre">Titre de la catégorie</label>
 			<input required autofocus type="text" name="titre" value="'.$this->data['titre'].'"/><br />
 			<label for="description">Contenu de la catégorie</label><br />
-			<textarea name="description" required>'.$this->data['contenu'].'</textarea><br />
+			<textarea name="description" required>'.$this->data['description'].'</textarea><br />
 			<input type="submit" value="Sauver" />
 			</form>';
 			return $html;

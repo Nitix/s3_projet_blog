@@ -68,15 +68,13 @@ class AdminController extends Controller
 	}
 
 	public static function addCategorie($error = '', $titre = '', $description = '' ){
-		$data['description'] = $contenu;
+		$data['description'] = $description;
 		$data['titre']   = $titre;
 		$data['error']	 = $error;
 		$data['jeton']	 = $_SESSION['jeton'];
 		$display = new AdminDisplay($data);
 		$display->displayPage('newCategorie');
 	}
-	
-	
 	
 	public static function saveCategorie(){
 		$data['titre'] = '';
