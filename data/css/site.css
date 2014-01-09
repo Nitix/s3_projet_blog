@@ -1,4 +1,4 @@
-body
+ body
 {
 	background-color:#B0C4DE;/*bleu*/
 }
@@ -31,7 +31,7 @@ nav
 #rightmenu
 {
 	
-
+	
 	
 }
 #leftmenu
@@ -43,7 +43,7 @@ nav
 footer
 {
 	background-color: #F5F5F5;	/*blanc*/
-	width: 20%;
+	width: 307px;
 	clear:both;
 	border-radius : 5px;
 	border-width : 2px;
@@ -57,7 +57,7 @@ footer
 section
 {
 	background-color: #F5F5F5;
-	width: 700px;
+	width: 680px;
 	border-width : 2px;
 	border-style: solid ;
 	border-color : blue;
@@ -68,5 +68,6 @@ section
 	-webkit-box-sizing : border-box;
 	-moz-box-sizing : border-box;
 	box-sizing : border-box;
-
+	margin-left: 10px;
+	margin-right: 10px;
 	}
