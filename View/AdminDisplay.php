@@ -41,7 +41,7 @@ class AdminDisplay extends Display {
 				<input type="hidden" name="jeton" value="'.$this->data['jeton'].'" />
 				<label for="titre">Titre du message</label>
 				<input required autofocus type="text" name="titre" value="'.$this->data['titre'].'"/><br />
-				<label for="contenu">Contenu du message</label>
+				<label for="contenu">Contenu du message</label><br />
 				<textarea name="contenu" required>'.$this->data['contenu'].'</textarea><br />
 				<label for="cat_id">Catégorie du message</label>
 				<select name="cat_id">';
@@ -69,4 +69,24 @@ class AdminDisplay extends Display {
 			<li><a href="Admin.php?a=addC">Ajouter une catégorie</a></li></ul></nav>';
 	}
 
+	private function newCategorie(){
+		$html = '<section><h1>Nouvelle catégorie</h1>';
+
+		if(!empty($this->data['jeton']))
+			$html .= '<div>'.$this->data['error'].'</div>';
+		$html .= '<form method="post" action="Admin.php?a=saveC">
+			<input type="hidden" name="jeton" value="'.$this->data['jeton'].'" />
+			<label for="titre">Titre de la catégorie</label>
+			<input required autofocus type="text" name="titre" value="'.$this->data['titre'].'"/><br />
+			<label for="description">Contenu de la catégorie</label><br />
+			<textarea name="description" required>'.$this->data['contenu'].'</textarea><br />
+			<input type="submit" value="Sauver" />
+			</form>';
+			return $html;
+	}
+	
+	private function categorieEnregistre(){
+		return 'Catégorie enregistrée';
+	}
+	
 }
