@@ -16,11 +16,10 @@ class AdminController extends Controller
 	} 
 	
 	public static function addMessage($error = '', $titre = '', $contenu = '' ){
-		$data['jeton']	 = hash('sha256', uniqid());
 		$data['contenu'] = $contenu;
 		$data['titre']   = $titre;
 		$data['error']	 = $error;
-		$_SESSION['jeton'] = $data['jeton'];
+		$data['jeton']	 = $_SESSION['jeton'];
 		$display = new AdminDisplay($data);
 		$display->displayPage('newMessage');
 	}

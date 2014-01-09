@@ -1,6 +1,8 @@
 <?php
 
 session_start();
+if(!isset($_SESSION['jeton']))
+	$_SESSION['jeton'] = hash('sha256', uniqid());
 
 function loadClasses($classname) {
 	 // le répertoire d'installation de l'application
