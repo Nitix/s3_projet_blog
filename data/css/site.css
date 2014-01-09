@@ -1,30 +1,72 @@
-body{
+body
+{
 	background-color:#B0C4DE;/*bleu*/
 }
 
-nav{
-	background-color:#FAFAD2;/*jjaune*/
-	display: inline-block;
-	float: left
-	width: 15% ; 
+#conteneur
+{
+	width:1200px;
+	margin-left: auto;
+	margin-right:auto;
+}
+	
+nav
+{
+	background-color:#F5F5F5;/*jjaune*/
+	width: 250px ; 
 	min-height: 200px ;
 	vertical-align:top;
-	float: left;
+	border-radius : 5px;
+	border-width : 2px;
+	border-style : solid;
+	padding : 20px;
+	border-color:black ;
+	display:inline-block;
+	box-sizing : border-box;
+	-webkit-box-sizing : border-box;
+	-moz-box-sizing : border-box;
 	
-	}
+}
 	
 #rightmenu
 {
-	float:right;
-	}
-footer{
-	background-color: #FFFFFF;	/*blanc*/
-	width: 30%;
-	float: clear;
 	
+
 	
+}
+#leftmenu
+{
+
+	
+}
+
+footer
+{
+	background-color: #F5F5F5;	/*blanc*/
+	width: 20%;
+	clear:both;
+	border-radius : 5px;
+	border-width : 2px;
+	border-style : solid;
+	border-color:black ;	
+	vertical-align: top;
+	margin-left:auto;
+	margin-right:auto;
 	}
 
-	section{
-		width:500px;
-		}
+section
+{
+	background-color: #F5F5F5;
+	width: 700px;
+	border-width : 2px;
+	border-style: solid ;
+	border-color : blue;
+	border-radius : 5px;
+	padding: 20px;
+	vertical-align:top;
+	display : inline-block;
+	-webkit-box-sizing : border-box;
+	-moz-box-sizing : border-box;
+	box-sizing : border-box;
+
+	}

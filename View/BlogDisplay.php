@@ -24,7 +24,7 @@ class BlogDisplay extends Display
 			<link rel="stylesheet" href="data/css/site.css"/>
 		</head>
 		<body>
-			'.$this->generateLeftMenu().$body.$this->generateRightMenu().'<br />
+			<div id="conteneur">'.$this->generateLeftMenu().$body.$this->generateRightMenu().'</div><br />
 			<footer>Ecris par Guillaume Pierson et Jordane Mahout</footer>
 		</body>
 	</html>';
@@ -53,7 +53,7 @@ class BlogDisplay extends Display
 	
 	private function generateLeftMenu()
 	{
-		$html = '<nav>Les Catégories<br />';
+		$html = '<nav id="leftmenu">Les Catégories<br />'; 
 		try{
 			$cats = Categorie::findAll();
 			foreach ($cats as $cat) {
