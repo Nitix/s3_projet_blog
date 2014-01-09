@@ -1,8 +1,6 @@
 <?php
 
-
-include_once 'Base.php';
-include_once 'Categorie.php';
+require_once('../common.php');
 
 echo "<h1>Blog test ....</h1>";
 
