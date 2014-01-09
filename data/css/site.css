@@ -71,3 +71,20 @@ section
 	margin-left: 10px;
 	margin-right: 10px;
 	}
+	
+caption
+{
+	color: #B22222;
+	text-align:center;		
+	}
+th
+{
+	color : #808080;	
+	}
+
+p{
+	color: #FF4500
+	text-align : center;
+	}
+
+
