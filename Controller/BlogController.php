@@ -40,11 +40,14 @@ class BlogController extends Controller
 	
 	public static function catAction(){
 		try{
-			if(!isset($_GET['id']))
-				throw new Exception('Identifiant non valide');
-			$billets = Billet::findByCat_ID($_GET['id']);
-			$display = new BlogDisplay($billets);
-			$display->displayPage('catDetail');
+			if(!isset($_GET['id'])){
+				$display = new BlogDisplay('Identifiant manquant');
+				$display->displayPage('error');
+			}else{
+				$cat = Categorie::findById($_GET['id']);
+				$display = new BlogDisplay($cat);
+				$display->displayPage('catDetail');
+			}
 		}catch(Exception $e){
 			$error = 'Erreur lors de la récupération des billets';
 			$display = new Display($error);

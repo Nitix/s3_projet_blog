@@ -81,12 +81,16 @@ class BlogDisplay extends Display
 		return $html;
 	}
 	private function catDetail(){
-		$cat = Categorie::findById($this->data[0]->__get('id'));
-		$html = '<section><p>Liste de tous les billets dans la catégorie '.$cat->__get('titre').'</p>Desciption : '.$cat->__get('description').'<br /><ul>';
-		foreach ($this->data as $billet) {
-			$html .= '<li><a href="Blog.php?a=detail&id='.$billet->__get('id').'">"'.$billet->__get('titre').'</a></li>';
+		$html = '<section><p>Liste de tous les billets dans la catégorie '.$this->data->__get('titre').'</p>Desciption : '.$this->data->__get('description').'<br /><ul>';
+		$billets = Billet::findByCat_ID($this->data->__get('id'));
+		if(!empty($billets)){
+			foreach ($billets as $billet) {
+				$html .= '<li><a href="Blog.php?a=detail&id='.$billet->__get('id').'">"'.$billet->__get('titre').'</a></li>';
+			}
+			$html .= '</ul></section>';
+		}else{
+			$html .= '<div class="notFound">Aucunde donnée trouvé</div>';
 		}
-		$html .= '</ul></section>';
 		return $html;		
 	}
 	
