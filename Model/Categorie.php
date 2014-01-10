@@ -201,7 +201,7 @@ class Categorie {
 		$row = $query->fetch(PDO::FETCH_BOTH);
 
 		if(empty($row))
-			throw new Exception("Aucune donnée trouvée", 51);
+			return null;
 		
 		$cat = new Categorie();
 		$cat -> __set('id', $row['id']);
@@ -235,8 +235,6 @@ class Categorie {
 			$cat -> __set('titre', $row['titre']);
 			$cats[] = $cat;
 		}
-		if(empty($cats))
-			throw new Exception("Aucune donnée trouvée", 52);
 		return $cats;
 	}
 
@@ -254,8 +252,6 @@ class Categorie {
 			$cat -> __set('titre', $row['titre']);
 			$cats[] = $cat;
 		}
-		if(empty($cats))
-			throw new Exception("Aucune donnée trouvée", 53);
 		return $cats;
 	}
 
