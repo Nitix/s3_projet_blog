@@ -221,8 +221,8 @@ class Billet {
 		$dbres = $query -> execute();
 		
 		$row = $query->fetch(PDO::FETCH_BOTH);
-		if(!$row)
-			throw new Exception("Aucune donnée trouvée", 50);
+		if(empty($row))
+			return null;
 			
 		$billet= new Billet();
 		$billet-> __set('id', $row['id']);
@@ -259,8 +259,6 @@ class Billet {
 			$billet-> __set('date', $row['date']);
 			$billets[] = $billet;
 		}
-		if(empty($billets))
-			throw new Exception("Aucune donnée trouvée", 51);
 		return $billets;
 	}
 
@@ -279,9 +277,7 @@ class Billet {
 			$billet-> __set('cat_id', $row['cat_id']);
 			$billet-> __set('date', $row['date']);
 			$billets[] = $billet;
-		}
-		if(empty($billets))
-			throw new Exception("Aucune donnée trouvée", 52);			
+		}		
 		return $billets;
 	}
 
@@ -301,8 +297,6 @@ class Billet {
 			$billet-> __set('date', $row['date']);
 			$billets[] = $billet;
 		}
-		if(empty($billets))
-			throw new Exception("Aucune donnée trouvée", 53);
 		return $billets;
 	}
 	
@@ -323,8 +317,6 @@ class Billet {
 			$billet-> __set('date', $row['date']);
 			$billets[] = $billet;
 		}
-		if(empty($billets))
-			throw new Exception("Aucune donnée trouvée", 54);
 		return $billets;
 	}
 }
