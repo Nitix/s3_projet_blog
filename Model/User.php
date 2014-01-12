@@ -1,5 +1,12 @@
 <?php
 
+/**
+ *
+ *  La Classe USer realise un Active Record sur la table user
+ *
+ *
+ *  @package blog
+ */
 class User {
 
 	/**

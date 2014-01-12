@@ -10,7 +10,6 @@
  */
 
 /**
- *  La classe Billet
  *
  *  La Classe Billet  realise un Active Record sur la table billet
  *
@@ -53,6 +52,13 @@ class Billet {
 	 *  @var String
 	 */
 	private $date;
+	
+	/**
+	 * createur du post
+	 * @access private
+	 * @var int
+	 */
+	private $user_id;
 
 
 	/**
@@ -78,6 +84,7 @@ class Billet {
 				   titre  " . $this -> titre . ":
 				   body" . $this -> body .":
 				   cat_id  " . $this -> cat_id . ":
+				   user_id  " . $this -> user_id . ":
 				   date  " . $this -> date;
 	}
 
@@ -136,7 +143,7 @@ class Billet {
 
 		$c = Base::getConnection();
 
-		$query = $c -> prepare("update billets set titre= ?, body= ?, cat_id = ?, date = ?
+		$query = $c -> prepare("update billets set titre= ?, body= ?, cat_id = ?, user_id= ?, date = ?
 				                   where id=?");
 
 		/*
@@ -145,8 +152,9 @@ class Billet {
 		$query -> bindParam(1, $this -> titre, PDO::PARAM_STR);
 		$query -> bindParam(2, $this -> body, PDO::PARAM_STR);
 		$query -> bindParam(3, $this -> cat_id, PDO::PARAM_INT);
-		$query -> bindParam(4, $this -> date, PDO::PARAM_STR);
-		$query -> bindParam(5, $this -> id, PDO::PARAM_INT);
+		$query -> bindParam(4, $this -> user_id, PDO::PARAM_INT);
+		$query -> bindParam(5, $this -> date, PDO::PARAM_STR);
+		$query -> bindParam(6, $this -> id, PDO::PARAM_INT);
 
 		/*
 		 * exécution de la requête
@@ -189,11 +197,12 @@ class Billet {
 
 		$c = Base::getConnection();
 
-		$query = $c -> prepare("insert into billets(titre, body, cat_id, date) VALUES (:titre, :body, :cat_id, :date)");
+		$query = $c -> prepare("insert into billets(titre, body, cat_id, user_id, date) VALUES (:titre, :body, :cat_id, :user_id, :date)");
 
 		$query -> bindParam(":titre", $this -> titre, PDO::PARAM_STR);
 		$query -> bindParam(":body", $this -> body, PDO::PARAM_STR);
 		$query -> bindParam(":cat_id", $this -> cat_id, PDO::PARAM_INT);
+		$query -> bindParam(":user_id", $this -> user_id, PDO::PARAM_INT);
 		$query -> bindParam(":date", $this -> date, PDO::PARAM_STR);
 
 		$res = $query -> execute();
@@ -229,6 +238,7 @@ class Billet {
 		$billet-> __set('body', $row['body']);
 		$billet-> __set('titre', $row['titre']);
 		$billet-> __set('cat_id', $row['cat_id']);
+		$billet-> __set('user_id', $row['user_id']);
 		$billet-> __set('date', $row['date']);
 		return $billet;
 	}
@@ -256,6 +266,7 @@ class Billet {
 			$billet-> __set('body', $row['body']);
 			$billet-> __set('titre', $row['titre']);
 			$billet-> __set('cat_id', $row['cat_id']);
+			$billet-> __set('user_id', $row['user_id']);
 			$billet-> __set('date', $row['date']);
 			$billets[] = $billet;
 		}
@@ -275,6 +286,7 @@ class Billet {
 			$billet-> __set('body', $row['body']);
 			$billet-> __set('titre', $row['titre']);
 			$billet-> __set('cat_id', $row['cat_id']);
+			$billet-> __set('user_id', $row['user_id']);
 			$billet-> __set('date', $row['date']);
 			$billets[] = $billet;
 		}		
@@ -294,6 +306,7 @@ class Billet {
 			$billet-> __set('body', $row['body']);
 			$billet-> __set('titre', $row['titre']);
 			$billet-> __set('cat_id', $row['cat_id']);
+			$billet-> __set('user_id', $row['user_id']);
 			$billet-> __set('date', $row['date']);
 			$billets[] = $billet;
 		}
@@ -314,6 +327,7 @@ class Billet {
 			$billet-> __set('body', $row['body']);
 			$billet-> __set('titre', $row['titre']);
 			$billet-> __set('cat_id', $row['cat_id']);
+			$billet-> __set('user_id', $row['user_id']);
 			$billet-> __set('date', $row['date']);
 			$billets[] = $billet;
 		}
