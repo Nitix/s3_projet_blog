@@ -102,7 +102,7 @@ class BlogDisplay extends Display
 				if(!empty($billets)){
 					$html .= '<ul>';
 					foreach ($billets as $billet) {
-						$html .= '<li><a href="Blog.php?a=detail&id='.$billet->__get('id').'">"'.$billet->__get('titre').'</a></li>';
+						$html .= '<li><a href="Blog.php?a=detail&id='.$billet->__get('id').'">'.$billet->__get('titre').'</a></li>';
 					}
 					$html .= '</ul></section>';
 				}else{
