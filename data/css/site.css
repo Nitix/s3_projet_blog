@@ -27,22 +27,12 @@ nav
 	-moz-box-sizing : border-box;
 	
 }
-	
-#rightmenu
-{
-	float:right;
-}
 
 footer
 {
 	background-color: #B0C4DE 
 	width: 30%;
 	float: clear;
-	
-}
-#leftmenu
-{
-
 	
 }
 
@@ -58,7 +48,7 @@ footer
 	vertical-align: top;
 	margin-left:auto;
 	margin-right:auto;
-	}
+}
 
 section
 {
@@ -76,21 +66,22 @@ section
 	box-sizing : border-box;
 	margin-left: 10px;
 	margin-right: 10px;
-	}
+}
 	
 caption
 {
 	color: #B22222;
 	text-align:center;		
-	}
+}
+
 th
 {
 	color : #808080;	
-	}
+}
 
 p{
 	color: #FF4500
 	text-align : center;
-	}
+}
 
 
