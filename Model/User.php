@@ -1,64 +1,39 @@
 <?php
 
-/**
- * File : Billet.php
- *
- * @author G. Pierson, J. Mahout
- *
- *
- * @package blog
- */
-
-/**
- *  La classe Billet
- *
- *  La Classe Billet  realise un Active Record sur la table billet
- *
- *
- *  @package blog
- */
-class Billet {
+class User {
 
 	/**
-	 *  Identifiant du billet
+	 *  Identifiant de l'user
 	 *  @access private
 	 *  @var integer
 	 */
 	private $id;
 
 	/**
-	 *  libelle du billet
+	 *  Speudo de l'user
 	 *  @access private
 	 *  @var String
 	 */
-	private $titre;
+	private $speudo;
 
 	/**
-	 *  body du billet
+	 *  Mot de passe de l'user 
 	 *  @access private
 	 *  @var String
 	 */
-	private $body;
+	private $password;
 	
 	/**
-	 *  Categorie du billet
+	 *  level de l'user
 	 *  @access private
 	 *  @var integer
 	 */
-	private $cat_id;
+	private $level;
 
 	/**
-	 *  date du billet
-	 *  @access private
-	 *  @var String
-	 */
-	private $date;
-
-
-	/**
-	 *  Constructeur de Billet
+	 *  Constructeur de Uer
 	 *
-	 *  fabrique un nouveau billet vide
+	 *  fabrique un nouvel utilisateur vide
 	 */
 
 	public function __construct() {
@@ -75,10 +50,8 @@ class Billet {
 	 */
 	public function __toString() {
 		return "[" . __CLASS__ . "] id : " . $this -> id . ":
-				   titre  " . $this -> titre . ":
-				   body" . $this -> body .":
-				   cat_id  " . $this -> cat_id . ":
-				   date  " . $this -> date;
+				   speudo  " . $this -> titre . ":
+				   level  " . $this -> level;
 	}
 
 	/**
@@ -136,16 +109,15 @@ class Billet {
 
 		$c = Base::getConnection();
 
-		$query = $c -> prepare("update billets set titre= ?, body= ?, cat_id = ?, date = ?
+		$query = $c -> prepare("update user set speudo= ?, password= ?, level = ?
 				                   where id=?");
 
 		/*
 		 * liaison des paramêtres :
 		 */
-		$query -> bindParam(1, $this -> titre, PDO::PARAM_STR);
-		$query -> bindParam(2, $this -> body, PDO::PARAM_STR);
-		$query -> bindParam(3, $this -> cat_id, PDO::PARAM_INT);
-		$query -> bindParam(4, $this -> date, PDO::PARAM_STR);
+		$query -> bindParam(1, $this -> speudo, PDO::PARAM_STR);
+		$query -> bindParam(2, $this -> password, PDO::PARAM_STR);
+		$query -> bindParam(3, $this -> level, PDO::PARAM_INT);
 		$query -> bindParam(5, $this -> id, PDO::PARAM_INT);
 
 		/*
@@ -170,7 +142,7 @@ class Billet {
 
 		$c = Base::getConnection();
 
-		$query = $c -> prepare("delete from billets where id=?");
+		$query = $c -> prepare("delete from user where id=?");
 
 		$query -> bindParam(1, $this -> id, PDO::PARAM_INT);
 
@@ -189,12 +161,11 @@ class Billet {
 
 		$c = Base::getConnection();
 
-		$query = $c -> prepare("insert into billets(titre, body, cat_id, date) VALUES (:titre, :body, :cat_id, :date)");
+		$query = $c -> prepare("insert into user(speudo, password, level) VALUES (:speudo, :password, :level)");
 
-		$query -> bindParam(":titre", $this -> titre, PDO::PARAM_STR);
-		$query -> bindParam(":body", $this -> body, PDO::PARAM_STR);
-		$query -> bindParam(":cat_id", $this -> cat_id, PDO::PARAM_INT);
-		$query -> bindParam(":date", $this -> date, PDO::PARAM_STR);
+		$query -> bindParam(":speudo", $this -> speudo, PDO::PARAM_STR);
+		$query -> bindParam(":password", $this -> password, PDO::PARAM_STR);
+		$query -> bindParam(":level", $this -> cat_id, PDO::PARAM_INT);
 
 		$res = $query -> execute();
 
@@ -211,12 +182,12 @@ class Billet {
 	 *
 	 *   @static
 	 *   @param integer $id OID to find
-	 *   @return Categorie renvoie un objet de type Categorie
+	 *   @return Categorie renvoie un objet de type User
 	 */
 	public static function findById($id) {
 
 		$c = Base::getConnection();
-		$query = $c -> prepare("select * from billets where id=?");
+		$query = $c -> prepare("select * from user where id=?");
 		$query -> bindParam(1, $id, PDO::PARAM_INT);
 		$dbres = $query -> execute();
 		
@@ -224,13 +195,13 @@ class Billet {
 		if(empty($row))
 			return null;
 			
-		$billet= new Billet();
-		$billet-> __set('id', $row['id']);
-		$billet-> __set('body', $row['body']);
-		$billet-> __set('titre', $row['titre']);
-		$billet-> __set('cat_id', $row['cat_id']);
-		$billet-> __set('date', $row['date']);
-		return $billet;
+		$user = new User();
+		$user->__set('id', $row['id']);
+		$user->__set('speudo', $row['speudo']);
+		$user->__set('password', $row['password']);
+		$user->__set('level', $row['level']);
+		
+		return $user;
 	}
 
 	/**
@@ -240,7 +211,7 @@ class Billet {
 	 *   sous la forme d'un tableau d'objet
 	 *
 	 *   @static
-	 *   @return Array renvoie un tableau de categorie
+	 *   @return Array renvoie un tableau de user
 	 */
 
 	public static function findAll() {
@@ -249,74 +220,45 @@ class Billet {
 		$query = $c -> prepare("select * from billets");
 		$rowbres = $query -> execute();
 		
-		$billets = array();
+		$users= array();
 		while($row = $query->fetch(PDO::FETCH_BOTH)){
-			$billet = new Billet();
-			$billet-> __set('id', $row['id']);
-			$billet-> __set('body', $row['body']);
-			$billet-> __set('titre', $row['titre']);
-			$billet-> __set('cat_id', $row['cat_id']);
-			$billet-> __set('date', $row['date']);
-			$billets[] = $billet;
+			$user = new User();
+			$user->__set('id', $row['id']);
+			$user->__set('speudo', $row['speudo']);
+			$user->__set('password', $row['password']);
+			$user->__set('level', $row['level']);
+			$users[] = $user;
 		}
-		return $billets;
-	}
-
-	public static function findByTitre($titre) {
-		$c = Base::getConnection();
-		$query = $c -> prepare("select * from billets where titre = :titre");
-		$query -> bindParam(":titre", $titre, PDO::PARAM_STR);
-		$dbres = $query -> execute();
-
-		$billets = array();
-		while($row = $query->fetch(PDO::FETCH_BOTH)){
-			$billet = new Billet();
-			$billet-> __set('id', $row['id']);
-			$billet-> __set('body', $row['body']);
-			$billet-> __set('titre', $row['titre']);
-			$billet-> __set('cat_id', $row['cat_id']);
-			$billet-> __set('date', $row['date']);
-			$billets[] = $billet;
-		}		
-		return $billets;
-	}
-
-	public static function findByCat_ID($id) {
-		$c = Base::getConnection();
-		$query = $c -> prepare("select * from billets where cat_id = :cat_id");
-		$query -> bindParam(":cat_id", $id, PDO::PARAM_INT);
-		$dbres = $query -> execute();
-
-		$billets = array();
-		while($row = $query->fetch(PDO::FETCH_BOTH)){
-			$billet = new Billet();
-			$billet-> __set('id', $row['id']);
-			$billet-> __set('body', $row['body']);
-			$billet-> __set('titre', $row['titre']);
-			$billet-> __set('cat_id', $row['cat_id']);
-			$billet-> __set('date', $row['date']);
-			$billets[] = $billet;
-		}
-		return $billets;
+		return $users;
 	}
 	
+	/**
+	 *   Finder sur Speudo
+	 *
+	 *   Retrouve la ligne de la table correspondant au ID passé en paramètre,
+	 *   retourne un objet
+	 *
+	 *   @static
+	 *   @param integer $id OID to find
+	 *   @return Categorie renvoie un objet de type User
+	 */
+	public static function findById($speudo) {
 
-	public static function findLastLimited($nb){
 		$c = Base::getConnection();
-		$query = $c -> prepare("select * from billets order by date LIMIT :nb");
-		$query -> bindParam(":nb", $nb, PDO::PARAM_INT);
+		$query = $c -> prepare("select * from user where speudo=?");
+		$query -> bindParam(1, $id, PDO::PARAM_STR);
 		$dbres = $query -> execute();
-
-		$billets = array();
-		while($row = $query->fetch(PDO::FETCH_BOTH)){
-			$billet = new Billet();
-			$billet-> __set('id', $row['id']);
-			$billet-> __set('body', $row['body']);
-			$billet-> __set('titre', $row['titre']);
-			$billet-> __set('cat_id', $row['cat_id']);
-			$billet-> __set('date', $row['date']);
-			$billets[] = $billet;
-		}
-		return $billets;
+		
+		$row = $query->fetch(PDO::FETCH_BOTH);
+		if(empty($row))
+			return null;
+			
+		$user = new User();
+		$user->__set('id', $row['id']);
+		$user->__set('speudo', $row['speudo']);
+		$user->__set('password', $row['password']);
+		$user->__set('level', $row['level']);
+		
+		return $user;
 	}
 }
