@@ -37,7 +37,7 @@ class BlogDisplay extends Display
 		if(!empty($billet)){
 			$cat = Categorie::findById($billet->__get('cat_id'));
 			$html = '<section><article><h2>'.$billet->__get('titre').
-				'</h2><p>'.$billet->__get('body').'</p>Catégorie : <a href="Blog.php?a=cat&id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article></section>';
+				'</h2><p>'.$billet->__get('body').'</p>Catégorie : <a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article></section>';
 		}else{
 			$html = '<section>Hmm, il semblerait que ce billet n\'existe pas, ou qu\'il a été supprimé, 
 				ou as-tu essayé de hacker, ou serait-ce une mauvaise programmation, je ne le saurai jamais, en tout cas il n\'y a pas le billet demandé.</section>';
@@ -51,8 +51,8 @@ class BlogDisplay extends Display
 			$html = '<section><table><caption>Liste de tous les billets</caption><tr><th>Titre</th><th>Catégorie</th></tr>';
 			foreach ($this->data as $billet) {
 				$cat = Categorie::findById($billet->__get('cat_id'));
-				$html .= '<tr><td><a href="Blog.php?a=detail&id='.$billet->__get('id').'">'.$billet->__get('titre').
-				'</a></td><td><a href="Blog.php?a=cat&id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></td></tr>';
+				$html .= '<tr><td><a href="Blog.php?a=detail&amp;id='.$billet->__get('id').'">'.$billet->__get('titre').
+				'</a></td><td><a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></td></tr>';
 			}
 			$html .= '</table></section>';
 		}else{
@@ -67,7 +67,7 @@ class BlogDisplay extends Display
 		try{
 			$cats = Categorie::findAll();
 			foreach ($cats as $cat) {
-				$html .= '<a href="Blog.php?a=cat&id='.$cat->__get('id').'">'.$cat->__get('titre').'</a><br />';
+				$html .= '<a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a><br />';
 			}
 		}catch(Exception $e){
 			$html .= 'Erreur à la récupération des catégories';
@@ -83,7 +83,7 @@ class BlogDisplay extends Display
 			$billets = Billet::findLastLimited(10);
 			if(!empty($billets)){
 				foreach ($billets as $billet) {
-						$html .= '<a href="Blog.php?a=detail&id='.$billet->__get('id').'">'.$billet->__get('titre').'</a><br />';
+						$html .= '<a href="Blog.php?a=detail&amp;id='.$billet->__get('id').'">'.$billet->__get('titre').'</a><br />';
 				}
 			}else{
 				$html = 'LOL, il n\'y a pas de billets...';
@@ -102,7 +102,7 @@ class BlogDisplay extends Display
 				if(!empty($billets)){
 					$html .= '<ul>';
 					foreach ($billets as $billet) {
-						$html .= '<li><a href="Blog.php?a=detail&id='.$billet->__get('id').'">'.$billet->__get('titre').'</a></li>';
+						$html .= '<li><a href="Blog.php?a=detail&amp;id='.$billet->__get('id').'">'.$billet->__get('titre').'</a></li>';
 					}
 					$html .= '</ul></section>';
 				}else{
@@ -121,7 +121,7 @@ class BlogDisplay extends Display
 		if(!empty($this->data)){
 			$html = '<section><table><caption>Liste de toutes les catégories</caption><tr><th>Titre</th><th>Description</th></tr>';
 			foreach ($this->data as $cat) {
-				$html .= '<tr><td><a href="Blog.php?a=cat&id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></td>
+				$html .= '<tr><td><a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></td>
 				<td>'.$cat->__get('description').'</a></td></td>';
 			}
 			$html .= '</section>';

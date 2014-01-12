@@ -1,6 +1,6 @@
- body
+body
 {
-	background-color:#B0C4DE;/*bleu*/
+	background-color:#B0C4DE;
 }
 
 #conteneur
@@ -20,20 +20,18 @@ nav
 	border-width : 2px;
 	border-style : solid;
 	padding : 20px;
-	border-color:black ;
+	border-color:black;
 	display:inline-block;
 	box-sizing : border-box;
 	-webkit-box-sizing : border-box;
 	-moz-box-sizing : border-box;
-	
 }
 
 footer
 {
-	background-color: #B0C4DE 
+	background-color: #B0C4DE;
 	width: 30%;
-	float: clear;
-	
+	clear: both;
 }
 
 footer
@@ -53,14 +51,14 @@ footer
 section
 {
 	background-color: #F5F5F5;
-	width: 680px;
 	border-width : 2px;
+	width: 680px;
+	display : inline-block;
 	border-style: solid ;
 	border-color : blue;
 	border-radius : 5px;
 	padding: 20px;
 	vertical-align:top;
-	display : inline-block;
 	-webkit-box-sizing : border-box;
 	-moz-box-sizing : border-box;
 	box-sizing : border-box;
@@ -80,8 +78,17 @@ th
 }
 
 p{
-	color: #FF4500
-	text-align : center;
+	color: #FF4500;
 }
-
-
+textarea
+{
+	width:100%;
+}
+#contenu, #description
+{
+	height: 400px;
+}
+#titre
+{
+	width: 100%;
+}
