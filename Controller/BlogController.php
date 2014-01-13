@@ -10,7 +10,7 @@ class BlogController extends Controller
 	);
 		
 	public static function home(){
-		self::listAction();
+		self::last10BilletsAction();
 	}
 	
 	public static function listAction(){
@@ -76,6 +76,20 @@ class BlogController extends Controller
 			if(DEBUG)
 				throw $e; 
 			$error = 'Erreur lors de la récupération des catégories';
+			$display = new Display($error);
+			$display->displayPage('error');
+		}
+	}
+
+	public static function last10BilletsAction(){
+		try{
+			$billets = Billet::findLastLimited(10);
+			$display = new BlogDisplay($billets);
+			$display->displayPage('last10billets');
+		}catch(Exception $e){
+			if(DEBUG)
+				throw $e; 
+			$error = 'Erreur lors de la récupération des billets';
 			$display = new Display($error);
 			$display->displayPage('error');
 		}

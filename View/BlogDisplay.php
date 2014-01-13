@@ -88,4 +88,30 @@ class BlogDisplay extends Display
 		}
 		return $html;
 	}
+	
+	protected function last10billets()
+	{
+		if(!empty($this->data)){
+			try{
+				$html = '<section>';
+				$first = true;
+				foreach ($this->data as $billet) {
+					if(!$first)
+						$html .= '<hr />';
+					$cat = Categorie::findById($billet->__get('cat_id'));
+					$html .= '<article><h2>'.$billet->__get('titre').
+						'</h2><p>'.$billet->__get('body').'</p>Catégorie : <a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article>';
+					$first = false;
+				}
+				$html .= '</section>';
+			}catch(Exception $e){
+				if(DEBUG)
+					throw $e; 
+				$html = '<section>Peut pas chercher catégorie pour billet</section>';
+			}
+		}else{
+			$html = '<section>Pas de billets, admin pas faire beaulot, moi pas content :p</section>';
+		}
+		return $html;
+	}
 }
