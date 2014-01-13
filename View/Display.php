@@ -1,8 +1,30 @@
 <?php
 
 abstract class Display{
+		
+	public function displayPage($action){
+		try{
+			$body = $this->$action();
+		}catch(Exception $e){
+			echo "Line :".$e->getLine();
+			echo "Code :".$e->getCode();
+			$body = "Méthode d'affichage non correct";
+		}
+	echo '<!DOCTYPE html>
+	<html lang="fr">
+		<head>
+			<meta charset="utf-8">
+			<title>Projet Blog</title>
+			<link rel="stylesheet" href="data/css/site.css"/>
+		</head>
+		<body>
+			<header>Bienvenue le BLOG<br />Ici on parle de tout et de rien, de rien surtout</header>
+			<div id="conteneur">'.$this->generateLeftMenu().$body.$this->generateRightMenu().'</div><br />
+			<footer>Ecris par Guillaume Pierson et Jordane Mahout</footer>
+		</body>
+	</html>';
+	}
 	
-	abstract public function displayPage($action);
 	
 	protected function generateLeftMenu()
 	{
