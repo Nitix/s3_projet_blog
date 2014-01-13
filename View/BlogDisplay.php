@@ -127,8 +127,11 @@ class BlogDisplay extends Display
 					if(!$first)
 						$html .= '<hr />';
 					$cat = Categorie::findById($billet->__get('cat_id'));
-					$html .= '<article><h2>'.$billet->__get('titre').
-						'</h2><p>'.$billet->__get('body').'</p>Catégorie : <a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article>';
+					$autor = User::findById($billet->__get('user_id'));
+					$html .= '<article><a href="Blog.php?a=detail&amp;id='.$billet->__get('id').'"><h2>'.$billet->__get('titre').
+						'</h2></a><p>'.$billet->__get('body').'</p>
+						Auteur : <a href="Utilisateur.php?a=detail&amp;id='.$autor->__get('id').'">'.$autor->__get('speudo').'</a><br />
+						Catégorie : <a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article>';
 					$first = false;
 				}
 				$html .= '</section>';
