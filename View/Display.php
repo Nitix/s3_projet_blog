@@ -6,6 +6,8 @@ abstract class Display{
 		try{
 			$body = $this->$action();
 		}catch(Exception $e){
+			if(DEBUG)
+				throw $e; 
 			echo "Line :".$e->getLine();
 			echo "Code :".$e->getCode();
 			$body = "Méthode d'affichage non correct";
@@ -35,6 +37,8 @@ abstract class Display{
 				$html .= '<a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a><br />';
 			}
 		}catch(Exception $e){
+			if(DEBUG)
+				throw $e; 
 			$html .= 'Erreur à la récupération des catégories';
 		}
 		$html .= '</nav>';
@@ -54,7 +58,9 @@ abstract class Display{
 				$html = 'LOL, il n\'y a pas de billets...';
 			}
 		}catch(Exception $e){
-			$html .= 'Erreur à la récupération des catégories';
+			if(DEBUG)
+				throw $e; 
+			$html .= 'Erreur à la récupération des billets';
 		}
 		$html .= '</nav>';
 		return $html;

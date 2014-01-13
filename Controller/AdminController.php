@@ -35,26 +35,34 @@ class AdminController extends Controller
 			if(!empty($data['contenu']) && !empty($data['titre'])){	
 				if($_POST['jeton'] == $_SESSION['jeton']){ 	
 					$data['cat_id'] = intval($_POST['cat_id']);
-					$cat = Categorie::findById($data['cat_id']);
-					if(!empty($cat)){
-						try{
-							$billet = new Billet();
-							$billet->__set('titre', $data['titre']);
-							$billet->__set('body', $data['contenu']);
-							$billet->__set('cat_id', $data['cat_id']);
-							$billet->__set('date', date("Y-m-d H:i:s"));
-							$res = $billet->insert();
-							if($res){
-								$display = new AdminDisplay($data);
-								$display->displayPage('messageEnregistre');	
-							}else{
-								self::addMessage("Erreur lors de l'ajout", $data['titre'], $data['contenu']);
+					try{
+						$cat = Categorie::findById($data['cat_id']);
+						if(!empty($cat)){
+							try{
+								$billet = new Billet();
+								$billet->__set('titre', $data['titre']);
+								$billet->__set('body', $data['contenu']);
+								$billet->__set('cat_id', $data['cat_id']);
+								$billet->__set('date', date("Y-m-d H:i:s"));
+								$res = $billet->insert();
+								if($res){
+									$display = new AdminDisplay($data);
+									$display->displayPage('messageEnregistre');	
+								}else{
+									self::addMessage("Erreur lors de l'ajout", $data['titre'], $data['contenu']);
+								}
+							}catch(Exception $e){
+								if(DEBUG)
+									throw $e; 
+								self::addMessage("Erreur lors de l'ajout", $data['titre'], $data['contenu']);	
 							}
-						}catch(Exception $e){
-							self::addMessage("Erreur lors de l'ajout", $data['titre'], $data['contenu']);	
+						}else{
+							self::addMessage("Catégorie inexistante", $data['titre'], $data['contenu']);
 						}
-					}else{
-						self::addMessage("Catégorie inexistante", $data['titre'], $data['contenu']);
+					}catch(Exception $e){
+						if(DEBUG)
+							throw $e;
+						self::addMessage("Erreur lors de la récupération des données", $data['titre'], $data['contenu']);
 					}
 				}else{
 					self::addMessage("Hackeur ?", $data['titre'], $data['contenu']);

@@ -12,12 +12,18 @@ class BlogDisplay extends Display
 	{
 		$billet = $this->data;
 		if(!empty($billet)){
-			$cat = Categorie::findById($billet->__get('cat_id'));
-			$autor = User::findById($billet->__get('user_id'));
-			$html = '<section><article><h2>'.$billet->__get('titre').
-				'</h2><p>'.$billet->__get('body').'</p>
-				Auteur : <a href="Utilisateur.php?a=detail&amp;id='.$autor->__get('id').'">'.$autor->__get('speudo').'</a><br />
-				Catégorie : <a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article></section>';
+			try{
+				$cat = Categorie::findById($billet->__get('cat_id'));
+				$autor = User::findById($billet->__get('user_id'));
+				$html = '<section><article><h2>'.$billet->__get('titre').
+					'</h2><p>'.$billet->__get('body').'</p>
+					Auteur : <a href="Utilisateur.php?a=detail&amp;id='.$autor->__get('id').'">'.$autor->__get('speudo').'</a><br />
+					Catégorie : <a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article></section>';
+			}catch(Exception $e){
+				if(DEBUG)
+					throw $e; 
+				$html = '<section>Peut pas chercher catégorie/utilisateur pour billet</section>';
+			}
 		}else{
 			$html = '<section>Hmm, il semblerait que ce billet n\'existe pas, ou qu\'il a été supprimé, 
 				ou as-tu essayé de hacker, ou serait-ce une mauvaise programmation, je ne le saurai jamais, en tout cas il n\'y a pas le billet demandé.</section>';
@@ -30,9 +36,15 @@ class BlogDisplay extends Display
 		if(!empty($this->data)){
 			$html = '<section><table><caption>Liste de tous les billets</caption><tr><th>Titre</th><th>Catégorie</th></tr>';
 			foreach ($this->data as $billet) {
-				$cat = Categorie::findById($billet->__get('cat_id'));
-				$html .= '<tr><td><a href="Blog.php?a=detail&amp;id='.$billet->__get('id').'">'.$billet->__get('titre').
-				'</a></td><td><a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></td></tr>';
+				try{
+					$cat = Categorie::findById($billet->__get('cat_id'));
+					$html .= '<tr><td><a href="Blog.php?a=detail&amp;id='.$billet->__get('id').'">'.$billet->__get('titre').
+					'</a></td><td><a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></td></tr>';
+				}catch(Exception $e){
+					if(DEBUG)
+						throw $e; 
+					$html = '<section>Je suis dans l\'incapacité de chercher les catégories des billets, je me suis désolé</section>';
+				}
 			}
 			$html .= '</table></section>';
 		}else{
@@ -56,6 +68,8 @@ class BlogDisplay extends Display
 					$html .= '<br /><div class="notFound">Il semblerait qu\'il n\'y aucun billet</div></section>';
 				}
 			}catch(Exception $e){
+				if(DEBUG)
+					throw $e; 
 				$html .= 'Erreur à la récupération des billets</section>';
 			}
 		}else{
