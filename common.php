@@ -16,8 +16,8 @@ function loadClasses($classname) {
 		 if (is_file( $filepath )) require_once $filepath ;
 	 }
 }
+require_once 'autoload'.DIRECTORY_SEPARATOR.'autoload.php';
 
 spl_autoload_register('loadClasses');
-
 
 ?>
