@@ -1,6 +1,6 @@
 <?php
 
-class User{
+class UserController{
 	
 	protected static $actions = array(
 		'list' 		=> 'listAction',
