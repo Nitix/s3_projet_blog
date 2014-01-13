@@ -62,10 +62,10 @@ class AdminDisplay extends Display {
 	}
 	
 	private function home(){
-		return '<section class=adminPanel>Selectionnez una action sur le menu de gauche</section>';
+		return '<section class=adminPanel>Selectionnez une action sur le menu de gauche</section>';
 	}
 
-	private function generateLeftMenu(){
+	protected function generateLeftMenu(){
 		return '<nav><ul>
 			<li><a href="Admin.php?a=addM">Ajouter un message</a></li>
 			<li><a href="Admin.php?a=addC">Ajouter une catégorie</a></li>
