@@ -8,30 +8,7 @@ class BlogDisplay extends Display
 		$this->data = $data;
 	} 
 	
-	public function displayPage($action){
-		try{
-			$body = $this->$action();
-		}catch(Exception $e){
-			echo "Line :".$e->getLine();
-			echo "Code :".$e->getCode();
-			$body = "Méthode d'affichage non correct";
-		}
-	echo '<!DOCTYPE html>
-	<html lang="fr">
-		<head>
-			<meta charset="utf-8">
-			<title>Projet Blog</title>
-			<link rel="stylesheet" href="data/css/site.css"/>
-		</head>
-		<body>
-			<header>Bienvenue le BLOG<br />Ici on parle de tout et de rien, de rien surtout</header>
-			<div id="conteneur">'.$this->generateLeftMenu().$body.$this->generateRightMenu().'</div><br />
-			<footer>Ecris par Guillaume Pierson et Jordane Mahout</footer>
-		</body>
-	</html>';
-	}
-	
-	private function billet()
+	protected function billet()
 	{
 		$billet = $this->data;
 		if(!empty($billet)){
@@ -45,7 +22,7 @@ class BlogDisplay extends Display
 		return $html;
 	}
 	
-	private function listBillets()
+	protected function listBillets()
 	{
 		if(!empty($this->data)){
 			$html = '<section><table><caption>Liste de tous les billets</caption><tr><th>Titre</th><th>Catégorie</th></tr>';
@@ -61,7 +38,7 @@ class BlogDisplay extends Display
 		return $html;
 	}
 	
-	private function catDetail(){
+	protected function catDetail(){
 		if(!empty($this->data)){
 			$html = '<section><p>Liste de tous les billets dans la catégorie '.$this->data->__get('titre').'</p>Desciption : '.$this->data->__get('description').'<br />';
 			try{
@@ -84,7 +61,7 @@ class BlogDisplay extends Display
 		return $html;		
 	}
 	
-	private function listCats(){
+	protected function listCats(){
 		if(!empty($this->data)){
 			$html = '<section><table><caption>Liste de toutes les catégories</caption><tr><th>Titre</th><th>Description</th></tr>';
 			foreach ($this->data as $cat) {
