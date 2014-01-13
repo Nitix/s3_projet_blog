@@ -1,7 +1,13 @@
 <?php
 
-abstract class Display{
+class Display{
 		
+	private $data;	
+	
+	public function __construct($data) {
+		$this->data = $data;
+	} 
+	
 	public function displayPage($action){
 		try{
 			$body = $this->$action();
@@ -68,7 +74,7 @@ abstract class Display{
 	
 		
 	protected function error(){
-		return '<section><div class="error">$this->data</div></section>';
+		return '<section><div class="error">'.$this->data.'</div></section>';
 	}
 
 }
