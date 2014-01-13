@@ -15,6 +15,8 @@ class AdminDisplay extends Display {
 		try{
 			$body = $this->$action();
 		}catch(Exception $e){
+			if(DEBUG)
+				throw $e; 
 			echo "Line :".$e->getLine();
 			echo "Code :".$e->getCode();
 			$body = "Méthode d'affichage non correct";

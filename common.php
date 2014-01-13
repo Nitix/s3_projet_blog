@@ -2,7 +2,8 @@
 
 session_start();
 
-define(DEBUG, true);
+//USE FOR DEBUG ONLY, DIDN'T CATCH ANY EXCEPTION
+define('DEBUG', true);
 
 if(!isset($_SESSION['jeton']))
 	$_SESSION['jeton'] = hash('sha256', uniqid());

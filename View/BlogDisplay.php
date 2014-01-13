@@ -17,6 +17,8 @@ class BlogDisplay extends Display
 				$html = '<section><article><h2>'.$billet->__get('titre').
 					'</h2><p>'.$billet->__get('body').'</p>Catégorie : <a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article></section>';
 			}catch(Exception $e){
+				if(DEBUG)
+					throw $e; 
 				$html = '<section>Peut pas chercher catégorie pour billet</section>';
 			}
 		}else{
@@ -36,6 +38,8 @@ class BlogDisplay extends Display
 					$html .= '<tr><td><a href="Blog.php?a=detail&amp;id='.$billet->__get('id').'">'.$billet->__get('titre').
 					'</a></td><td><a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></td></tr>';
 				}catch(Exception $e){
+					if(DEBUG)
+						throw $e; 
 					$html = '<section>Je suis dans l\'incapacité de chercher les catégories des billets, je me suis désolé</section>';
 				}
 			}
@@ -61,6 +65,8 @@ class BlogDisplay extends Display
 					$html .= '<br /><div class="notFound">Il semblerait qu\'il n\'y aucun billet</div></section>';
 				}
 			}catch(Exception $e){
+				if(DEBUG)
+					throw $e; 
 				$html .= 'Erreur à la récupération des billets</section>';
 			}
 		}else{

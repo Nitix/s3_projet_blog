@@ -19,6 +19,8 @@ class BlogController extends Controller
 			$display = new BlogDisplay($billets);
 			$display->displayPage('listBillets');
 		}catch(Exception $e){
+			if(DEBUG)
+				throw $e; 
 			$error = 'Erreur lors de la récupération des billets';
 			$display = new Display($error);
 			$display->displayPage('error');
@@ -37,6 +39,8 @@ class BlogController extends Controller
 				$display->displayPage('billet');
 			}
 		}catch(Exception $e){
+			if(DEBUG)
+				throw $e; 
 			$error = 'Erreur lors de la récupération du billet';
 			$display = new Display($error);
 			$display->displayPage('error');
@@ -55,6 +59,8 @@ class BlogController extends Controller
 				$display->displayPage('catDetail');
 			}
 		}catch(Exception $e){
+			if(DEBUG)
+				throw $e; 
 			$error = 'Erreur lors de la récupération de la catégorie';
 			$display = new Display($error);
 			$display->displayPage('error');
@@ -67,6 +73,8 @@ class BlogController extends Controller
 			$display = new BlogDisplay($cats);
 			$display->displayPage('listCats');
 		}catch(Exception $e){
+			if(DEBUG)
+				throw $e; 
 			$error = 'Erreur lors de la récupération des catégories';
 			$display = new Display($error);
 			$display->displayPage('error');
