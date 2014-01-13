@@ -16,10 +16,11 @@ class AdminController extends Controller
 	} 
 	
 	public static function addMessage($error = '', $titre = '', $contenu = '' ){
-		$data['contenu'] = $contenu;
-		$data['titre']   = $titre;
-		$data['error']	 = $error;
-		$data['jeton']	 = $_SESSION['jeton'];
+		$data['contenu']	= $contenu;
+		$data['titre']		= $titre;
+		$data['error']		= $error;
+		$data['jeton']		= $_SESSION['jeton'];
+		$data['categories'] = $categories = Categorie::findAll();
 		$display = new AdminDisplay($data);
 		$display->displayPage('newMessage');
 	}
@@ -34,8 +35,8 @@ class AdminController extends Controller
 			if(!empty($data['contenu']) && !empty($data['titre'])){	
 				if($_POST['jeton'] == $_SESSION['jeton']){ 	
 					$data['cat_id'] = intval($_POST['cat_id']);
-					try{
-						Categorie::findById($data['cat_id']);
+					$cat = Categorie::findById($data['cat_id']);
+					if(!empty($cat)){
 						try{
 							$billet = new Billet();
 							$billet->__set('titre', $data['titre']);
@@ -50,10 +51,9 @@ class AdminController extends Controller
 								self::addMessage("Erreur lors de l'ajout", $data['titre'], $data['contenu']);
 							}
 						}catch(Exception $e){
-							self::addMessage("Erreur lors de l'ajout", $data['titre'], $data['contenu']);
-							
+							self::addMessage("Erreur lors de l'ajout", $data['titre'], $data['contenu']);	
 						}
-					}catch(Exception $e){
+					}else{
 						self::addMessage("Catégorie inexistante", $data['titre'], $data['contenu']);
 					}
 				}else{
