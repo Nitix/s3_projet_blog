@@ -313,6 +313,26 @@ class Billet {
 		return $billets;
 	}
 	
+	public static function findByUSer_ID($id) {
+		$c = Base::getConnection();
+		$query = $c -> prepare("select * from billets where user_id = :user_id");
+		$query -> bindParam(":user_id", $id, PDO::PARAM_INT);
+		$dbres = $query -> execute();
+
+		$billets = array();
+		while($row = $query->fetch(PDO::FETCH_BOTH)){
+			$billet = new Billet();
+			$billet-> __set('id', $row['id']);
+			$billet-> __set('body', $row['body']);
+			$billet-> __set('titre', $row['titre']);
+			$billet-> __set('cat_id', $row['cat_id']);
+			$billet-> __set('user_id', $row['user_id']);
+			$billet-> __set('date', $row['date']);
+			$billets[] = $billet;
+		}
+		return $billets;
+	}
+	
 
 	public static function findLastLimited($nb){
 		$c = Base::getConnection();

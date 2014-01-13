@@ -14,7 +14,7 @@ class UserController extends Controller{
 	public static function listAction(){
 		try{
 			$display = new UserDisplay(User::findAll());
-			$display->displayPage('list');
+			$display->displayPage('listUsers');
 		}catch(Exception $e){
 			$error = 'Erreur lors de la récupération des utilisateurs';
 			$display = new Display($error);
@@ -31,7 +31,7 @@ class UserController extends Controller{
 			}else{				
 				$user = User::findById($_GET['id']);
 				$display = new UserDisplay($user);
-				$display->displayPage('billet');
+				$display->displayPage('user');
 			}
 		}catch(Exception $e){
 			$error = 'Erreur lors de la récupération de l\'utilisateur';

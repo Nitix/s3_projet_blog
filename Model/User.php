@@ -9,6 +9,12 @@
  */
 class User {
 
+	private static $rang = array(
+		0 => 'Membre',
+		1 => 'Modérateur',
+		2 => 'Adminstrateur'
+	 );
+
 	/**
 	 *  Identifiant de l'user
 	 *  @access private
@@ -224,7 +230,7 @@ class User {
 	public static function findAll() {
 
 		$c = Base::getConnection();
-		$query = $c -> prepare("select * from billets");
+		$query = $c -> prepare("select * from user");
 		$rowbres = $query -> execute();
 		
 		$users= array();
@@ -249,7 +255,7 @@ class User {
 	 *   @param integer $id OID to find
 	 *   @return Categorie renvoie un objet de type User
 	 */
-	public static function findById($speudo) {
+	public static function findBySpeudo($speudo) {
 
 		$c = Base::getConnection();
 		$query = $c -> prepare("select * from user where speudo=?");
@@ -268,4 +274,12 @@ class User {
 		
 		return $user;
 	}
+	
+	public static function rang($level = 0){
+		if(array_key_exists($level, self::$rang))
+			return self::$rang[$level];
+		else 
+			return self::$rang[0];
+	}
+	
 }
