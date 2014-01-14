@@ -16,7 +16,7 @@ class BlogDisplay extends Display
 				$cat = Categorie::findById($billet->__get('cat_id'));
 				$autor = User::findById($billet->__get('user_id'));
 				$html = '<section><article><h2>'.$billet->__get('titre').
-					'</h2><p>'.$billet->__get('body').'</p>
+					'</h2><p>'.nl2br($billet->__get('body')).'</p>
 					Auteur : <a href="Utilisateur.php?a=detail&amp;id='.$autor->__get('id').'">'.$autor->__get('speudo').'</a><br />
 					Catégorie : <a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article></section>';
 			}catch(Exception $e){
@@ -129,7 +129,7 @@ class BlogDisplay extends Display
 					$cat = Categorie::findById($billet->__get('cat_id'));
 					$autor = User::findById($billet->__get('user_id'));
 					$html .= '<article><a href="Blog.php?a=detail&amp;id='.$billet->__get('id').'"><h2>'.$billet->__get('titre').
-						'</h2></a><p>'.$billet->__get('body').'</p>
+						'</h2></a><p>'.nl2br($billet->__get('body')).'</p>
 						Auteur : <a href="Utilisateur.php?a=detail&amp;id='.$autor->__get('id').'">'.$autor->__get('speudo').'</a><br />
 						Catégorie : <a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article>';
 					$first = false;
