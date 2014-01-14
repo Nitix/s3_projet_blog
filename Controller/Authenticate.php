@@ -17,7 +17,7 @@ class Authenticate
 					$policy->length($policy->atLeast(6));
 					
 					$res = $policy->test($password);
-					if($res){
+					if($res->result){
 						$lib = new PasswordLib\PasswordLib();
 						$token = $lib->getRandomToken(16);
 						$hash = $lib->createPasswordHash($password.$token);
@@ -71,6 +71,7 @@ class Authenticate
 	 // détruire la variable de session
 	 // créer variable de session = profil chargé
 	private static function loadProfile(User $user) {
+		session_regenerate_id();
 		$_SESSION['id'] 	= $user->__get('id');
 		$_SESSION['speudo'] = $user->__get('speudo');
 		$_SESSION['level']	= $user->__get('level');

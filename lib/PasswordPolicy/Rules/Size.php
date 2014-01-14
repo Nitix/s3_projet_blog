@@ -6,7 +6,7 @@ class Size extends Base {
 
     public function getMessage() {
         $constraint = parent::getMessage();
-        return "Expecting a password length of $constraint characters";
+        return "Neccessite un mot de passe d'$constraint caractères";
     }
 
     public function test($password) {

@@ -49,13 +49,13 @@ class Regex extends Base {
             case 'letter':
                 return array('a-zA-Z', 'letter');
             case 'lowercase':
-                return array('a-z', 'lowercase');
+                return array('a-z', 'majuscule(s)');
             case 'uppercase':
-                return array('A-Z', 'uppercase');
+                return array('A-Z', 'miniscule(s)');
             case 'alnum':
                 return array('a-zA-Z0-9', 'alpha numeric');
             case 'digit':
-                return array('0-9', 'digit');
+                return array('0-9', 'chiffre(s)');
             case 'symbol':
                 return array('^a-zA-Z0-9', 'symbol');
             case 'null':

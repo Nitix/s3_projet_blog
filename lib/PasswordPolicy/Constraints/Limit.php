@@ -28,7 +28,7 @@ class Limit implements \PasswordPolicy\Constraint {
         } elseif ($this->min == 0) {
             return "at most {$this->max}";
         } elseif ($this->max == PHP_INT_MAX) {
-            return "at least {$this->min}";
+            return "au moins{$this->min}";
         }
         return "at least {$this->min} and at most {$this->max}";
     }

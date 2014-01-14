@@ -39,26 +39,33 @@ class UserControlDisplay extends Display
 	}
 	
 	protected function register(){
-		$html = '<section class=login><h1>Connexion</h1>';
+		$html = '<section class=login><h1>Enregistrement</h1>';
 		if(!empty($this->data['error']))
 			$html .= '<div>'.$this->data['error'].'</div>';
-		$html .= '<form id="form" method="post" action="UserControl.php?a=registerSend">
-			<div style="display: hidden" id=passworderror></div>
+		$html .= '<form id="form" method="post" action="UserControl.php?a=registerSend" onsubmit="return checkPassword()">
+			<div style="display: hidden" id="passworderror"></div>
 			<label for="speudo">speudo</label><br />
 			<input required autofocus class=speudo type="text" id="speudo" name="speudo" value="'.$this->data['speudo'].'"/><br />
 			<label for="password">mot de passe</label><br />
 			<input required class=password type="password" id="password" name="password"/><br />
-			<button onclick="checkPassword()">S\'enregistrer</button>
-			</form></section><script>var policy = '.$this->data['js'].';
+			<input type="submit" value="S\'enregistrer"/>
+			</form></section><script>
 			 function checkPassword(){
-			  var result = policy(password);
+			 	var policy = '.$this->data['js'].';
+			  	var result = policy(document.getElementById("password").value);
 				if (!result.result) {
-					$ele = document.getElementById("passworderror");
-					$ele.innerHTML = result.messages;
-					$ele.style.display="block";
+					ele = document.getElementById("passworderror");
+					var mess = "";
+					result.messages.forEach(function(entry) {
+						mess += entry.message + "<br />";
+					});
+					ele.innerHTML= mess;
+					ele.style.display="block";
+					return false;
 				}else{
-					document.getElementById("passworderror").submit();
+					return true;
 				}
+			 }
 			</script>';
 			return $html;
 	}
