@@ -187,9 +187,10 @@ class User {
 
 		$c = Base::getConnection();
 
-		$query = $c -> prepare("insert into user(speudo, password, level, salt) VALUES (:speudo, :password, :level, :salt)");
+		$query = $c -> prepare("insert into user(speudo, email, password, level, salt) VALUES (:speudo, :email, :password, :level, :salt)");
 
 		$query -> bindParam(":speudo", $this -> speudo, PDO::PARAM_STR);
+		$query -> bindParam(":email", $this -> email, PDO::PARAM_STR);
 		$query -> bindParam(":password", $this -> password, PDO::PARAM_STR);
 		$query -> bindParam(":level", $this -> level, PDO::PARAM_INT);
 		$query -> bindParam(":salt", $this -> salt, PDO::PARAM_STR);
@@ -225,6 +226,7 @@ class User {
 		$user = new User();
 		$user->__set('id', $row['id']);
 		$user->__set('speudo', $row['speudo']);
+		$user->__set('email', $row['email']);
 		$user->__set('password', $row['password']);
 		$user->__set('level', $row['level']);
 		$user->__set('salt', $row['salt']);
@@ -253,6 +255,7 @@ class User {
 			$user = new User();
 			$user->__set('id', $row['id']);
 			$user->__set('speudo', $row['speudo']);
+			$user->__set('email', $row['email']);
 			$user->__set('password', $row['password']);
 			$user->__set('level', $row['level']);
 			$user->__set('salt', $row['salt']);
@@ -285,6 +288,7 @@ class User {
 		$user = new User();
 		$user->__set('id', $row['id']);
 		$user->__set('speudo', $row['speudo']);
+		$user->__set('email', $row['email']);
 		$user->__set('password', $row['password']);
 		$user->__set('level', $row['level']);
 		$user->__set('salt', $row['salt']);

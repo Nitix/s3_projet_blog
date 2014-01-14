@@ -120,26 +120,16 @@ class BlogDisplay extends Display
 	protected function last10billets()
 	{
 		if(!empty($this->data)){
-			try{
-				$html = '<section>';
-				$first = true;
-				foreach ($this->data as $billet) {
-					if(!$first)
-						$html .= '<hr />';
-					$cat = Categorie::findById($billet->__get('cat_id'));
-					$autor = User::findById($billet->__get('user_id'));
-					$html .= '<article><a href="Blog.php?a=detail&amp;id='.$billet->__get('id').'"><h2>'.$billet->__get('titre').
-						'</h2></a><p>'.nl2br($billet->__get('body')).'</p>
-						Auteur : <a href="Blog.php?a=detailUser&amp;id='.$autor->__get('id').'">'.$autor->__get('speudo').'</a><br />
-						Catégorie : <a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article>';
-					$first = false;
-				}
-				$html .= '</section>';
-			}catch(Exception $e){
-				if(DEBUG)
-					throw $e; 
-				$html = '<section>Peut pas chercher catégorie pour billet</section>';
+			$html = '<section>';
+			$first = true;
+			foreach ($this->data as $billet) {
+				if(!$first)
+					$html .= '<hr />';
+				$html .= '<article><a href="Blog.php?a=detail&amp;id='.$billet->__get('id').'"><h2>'.$billet->__get('titre').
+					'</h2></a><p>'.nl2br($billet->__get('body')).'</p></article>';
+				$first = false;
 			}
+			$html .= '</section>';
 		}else{
 			$html = '<section>Pas de billets, admin pas faire beaulot, moi pas content :p</section>';
 		}
@@ -168,7 +158,8 @@ class BlogDisplay extends Display
 		$user = $this->data;
 		if(!empty($user)){
 			$html = '<section><h2>'.$user->__get('speudo').
-				'</h2>Rang : '.User::rang($user->__get('level')).'<br />';
+				'</h2>Rang : '.User::rang($user->__get('level')).'<br />
+				email : '.$user->__get('email').'<br />';
 				try{
 					$billets = Billet::findByUSer_ID($user->__get('id'));
 					if(!empty($billets))

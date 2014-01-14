@@ -5,8 +5,8 @@ class Authenticate
 	 // vérifier la conformité de $password avec la police
 	 // si ok : hacher $password
 	 // créer et sauvegarder l'utilisateur	
-	public static function createUser ( $userName, $password, $level = 0 ) {
-		if(!empty($userName) && !empty($password)){
+	public static function createUser ( $userName, $password, $email, $level = 0 ) {
+		if(!empty($userName) && !empty($password) && !empty($email)){
 			try{
 				$user = User::findBySpeudo($userName);
 				if(empty($user)){
@@ -23,6 +23,7 @@ class Authenticate
 						$hash = $lib->createPasswordHash($password.$token);
 						$user = new User();
 						$user->__set('speudo', $userName);
+						$user->__set('email', $email);
 						$user->__set('password', $hash);
 						$user->__set('level', $level);
 						$user->__set('salt', $token);
@@ -42,7 +43,7 @@ class Authenticate
 				throw new Exception($emess, 61);
 			}
 		}else{
-			$emess = 'Speudo ou mot de passe vide';
+			$emess = 'Speudo ou email ou mot de passe vide';
 			throw new Exception($emess, 62);
 		}
 	}

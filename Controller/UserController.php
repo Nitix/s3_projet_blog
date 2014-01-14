@@ -56,11 +56,12 @@ class UserController extends Controller
 	public static function registerSend(){
 		$speudo = '';
 		$password   = '';
-		if(isset($_POST['speudo']) && isset($_POST['password'])){
+		if(isset($_POST['speudo']) && isset($_POST['password']) && isset($_POST['email'])){
 			$speudo		= htmlspecialchars($_POST['speudo']);
 			$password   = htmlspecialchars($_POST['password']);	
+			$email 		= htmlspecialchars($_POST['email']);
 			try{		
-				$res = Authenticate::createUser($speudo, $password);
+				$res = Authenticate::createUser($speudo, $password, $email, $level);
 				$display = new UserDisplay($speudo);
 				$display->displayPage('registerOK');
 			}catch(Exception $e){

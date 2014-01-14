@@ -7,7 +7,7 @@ class AdminController extends Controller
 		'addM' 		=> 'AddMessage',
 		'saveM' 	=> 'saveMessage',
 		'addC' 		=> 'addCategorie',
-		'saveC' 	=> 'saveCategorie'
+		'saveC' 	=> 'saveCategorie',
 	);
 	
 	public static function home(){
