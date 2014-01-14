@@ -1,6 +1,6 @@
 <?php
 	
-class UserControlController extends Controller
+class UserController extends Controller
 {
 
 	protected static $actions = array(
