@@ -14,9 +14,7 @@ class Display{
 		}catch(Exception $e){
 			if(DEBUG)
 				throw $e; 
-			echo "Line :".$e->getLine();
-			echo "Code :".$e->getCode();
-			$body = "Méthode d'affichage non correct";
+			$body = "<section>Méthode d'affichage non correct</section>";
 		}
 	echo '<!DOCTYPE html>
 	<html lang="fr">

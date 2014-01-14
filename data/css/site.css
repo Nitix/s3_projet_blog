@@ -92,3 +92,10 @@ textarea
 {
 	width: 100%;
 }
+
+.login
+{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}

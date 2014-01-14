@@ -11,8 +11,7 @@ class User {
 
 	private static $rang = array(
 		0 => 'Membre',
-		1 => 'Modérateur',
-		2 => 'Adminstrateur'
+		1 => 'Adminstrateur'
 	 );
 
 	/**
@@ -42,6 +41,11 @@ class User {
 	 *  @var integer
 	 */
 	private $level;
+	
+	/**
+	 * Sel du mot de passe
+	 */
+	 private $salt;
 
 	/**
 	 *  Constructeur de Uer
@@ -122,7 +126,7 @@ class User {
 
 		$c = Base::getConnection();
 
-		$query = $c -> prepare("update user set speudo= ?, password= ?, level = ?
+		$query = $c -> prepare("update user set speudo= ?, password= ?, level = ?, salt = ?
 				                   where id=?");
 
 		/*
@@ -131,6 +135,7 @@ class User {
 		$query -> bindParam(1, $this -> speudo, PDO::PARAM_STR);
 		$query -> bindParam(2, $this -> password, PDO::PARAM_STR);
 		$query -> bindParam(3, $this -> level, PDO::PARAM_INT);
+		$query -> bindParam(4, $this -> salt, PDO::PARAM_STR);
 		$query -> bindParam(5, $this -> id, PDO::PARAM_INT);
 
 		/*
@@ -174,11 +179,12 @@ class User {
 
 		$c = Base::getConnection();
 
-		$query = $c -> prepare("insert into user(speudo, password, level) VALUES (:speudo, :password, :level)");
+		$query = $c -> prepare("insert into user(speudo, password, level, salt) VALUES (:speudo, :password, :level, :salt)");
 
 		$query -> bindParam(":speudo", $this -> speudo, PDO::PARAM_STR);
 		$query -> bindParam(":password", $this -> password, PDO::PARAM_STR);
-		$query -> bindParam(":level", $this -> cat_id, PDO::PARAM_INT);
+		$query -> bindParam(":level", $this -> level, PDO::PARAM_INT);
+		$query -> bindParam(":salt", $this -> salt, PDO::PARAM_STR);
 
 		$res = $query -> execute();
 
@@ -213,6 +219,7 @@ class User {
 		$user->__set('speudo', $row['speudo']);
 		$user->__set('password', $row['password']);
 		$user->__set('level', $row['level']);
+		$user->__set('salt', $row['salt']);
 		
 		return $user;
 	}
@@ -240,6 +247,7 @@ class User {
 			$user->__set('speudo', $row['speudo']);
 			$user->__set('password', $row['password']);
 			$user->__set('level', $row['level']);
+			$user->__set('salt', $row['salt']);
 			$users[] = $user;
 		}
 		return $users;
@@ -258,8 +266,8 @@ class User {
 	public static function findBySpeudo($speudo) {
 
 		$c = Base::getConnection();
-		$query = $c -> prepare("select * from user where speudo=?");
-		$query -> bindParam(1, $id, PDO::PARAM_STR);
+		$query = $c -> prepare("select * from user where lower(speudo)=lower(?)");
+		$query -> bindParam(1, $speudo, PDO::PARAM_STR);
 		$dbres = $query -> execute();
 		
 		$row = $query->fetch(PDO::FETCH_BOTH);
@@ -271,6 +279,7 @@ class User {
 		$user->__set('speudo', $row['speudo']);
 		$user->__set('password', $row['password']);
 		$user->__set('level', $row['level']);
+		$user->__set('salt', $row['salt']);
 		
 		return $user;
 	}

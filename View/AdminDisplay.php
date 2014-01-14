@@ -37,7 +37,7 @@ class AdminDisplay extends Display {
 	private function newMessage(){
 		$html = '<section class=adminPanel><h1>Nouveau message</h1>';
 		if(!empty($this->data['categories'])){
-			if(!empty($this->data['jeton']))
+			if(!empty($this->data['error']))
 				$html .= '<div>'.$this->data['error'].'</div>';
 			$html .= '<form method="post" action="Admin.php?a=saveM">
 					<input type="hidden" name="jeton" value="'.$this->data['jeton'].'" />
@@ -77,7 +77,7 @@ class AdminDisplay extends Display {
 	private function newCategorie(){
 		$html = '<section class=adminPanel><h1>Nouvelle catégorie</h1>';
 
-		if(!empty($this->data['jeton']))
+		if(!empty($this->data['error']))
 			$html .= '<div>'.$this->data['error'].'</div>';
 		$html .= '<form method="post" action="Admin.php?a=saveC">
 			<input type="hidden" name="jeton" value="'.$this->data['jeton'].'" />
