@@ -1,6 +1,6 @@
 <?php
 
-class UserControlDisplay extends Display
+class UserDisplay extends Display
 {
 	
 	private $data;	
@@ -24,7 +24,7 @@ class UserControlDisplay extends Display
 
 		if(!empty($this->data['error']))
 			$html .= '<div>'.$this->data['error'].'</div>';
-		$html .= '<form method="post" action="UserControl.php?a=loginSend">
+		$html .= '<form method="post" action="Utilisateur.php?a=loginSend">
 			<label for="speudo">speudo</label><br />
 			<input required autofocus class=speudo type="text" id="speudo" name="speudo" value="'.$this->data['speudo'].'"/><br />
 			<label for="password">mot de passe</label><br />
@@ -42,7 +42,7 @@ class UserControlDisplay extends Display
 		$html = '<section class=login><h1>Enregistrement</h1>';
 		if(!empty($this->data['error']))
 			$html .= '<div>'.$this->data['error'].'</div>';
-		$html .= '<form id="form" method="post" action="UserControl.php?a=registerSend" onsubmit="return checkPassword()">
+		$html .= '<form id="form" method="post" action="Utilisateur.php?a=registerSend" onsubmit="return checkPassword()">
 			<div style="display: hidden" id="passworderror"></div>
 			<label for="speudo">speudo</label><br />
 			<input required autofocus class=speudo type="text" id="speudo" name="speudo" value="'.$this->data['speudo'].'"/><br />

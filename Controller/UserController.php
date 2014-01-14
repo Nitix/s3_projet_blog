@@ -17,7 +17,7 @@ class UserController extends Controller
 	public static function login($error = '', $speudo = ''){
 		$data['speudo']		= $speudo;
 		$data['error']		= $error;
-		$display = new UserControlDisplay($data);
+		$display = new UserDisplay($data);
 		$display->displayPage('login');
 	}
 	
@@ -29,7 +29,7 @@ class UserController extends Controller
 			$password   = htmlspecialchars($_POST['password']);	
 			try{		
 				$res = Authenticate::checkLogin($speudo, $password);
-				$display = new UserControlDisplay($speudo);
+				$display = new UserDisplay($speudo);
 				$display->displayPage('connectOK');
 			}catch(Exception $e){
 				self::login($e->getMessage(), $speudo);
@@ -49,7 +49,7 @@ class UserController extends Controller
 		$policy->contains('digit', $policy->atLeast(1));
 		$policy->length($policy->atLeast(6));
 		$data['js'] = $policy->toJavaScript();
-		$display = new UserControlDisplay($data);
+		$display = new UserDisplay($data);
 		$display->displayPage('register');
 	}
 	
@@ -61,7 +61,7 @@ class UserController extends Controller
 			$password   = htmlspecialchars($_POST['password']);	
 			try{		
 				$res = Authenticate::createUser($speudo, $password);
-				$display = new UserControlDisplay($speudo);
+				$display = new UserDisplay($speudo);
 				$display->displayPage('registerOK');
 			}catch(Exception $e){
 				self::register($e->getMessage(), $speudo);
