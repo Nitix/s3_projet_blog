@@ -17,7 +17,7 @@ class BlogDisplay extends Display
 				$autor = User::findById($billet->__get('user_id'));
 				$html = '<section><article><h2>'.$billet->__get('titre').
 					'</h2><p>'.nl2br($billet->__get('body')).'</p>
-					Auteur : <a href="Utilisateur.php?a=detail&amp;id='.$autor->__get('id').'">'.$autor->__get('speudo').'</a><br />
+					Auteur : <a href="Blog.php?a=detailUser&amp;id='.$autor->__get('id').'">'.$autor->__get('speudo').'</a><br />
 					Catégorie : <a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article></section>';
 			}catch(Exception $e){
 				if(DEBUG)
@@ -92,7 +92,7 @@ class BlogDisplay extends Display
 		return $html;
 	}
 	
-	protected function userDetail(){
+	protected function autor(){
 		if(!empty($this->data)){
 			$html = '<section><p>Liste de tous les billets de l\'auteur '.$this->data->__get('speudo').'</p><br />';
 			try{
@@ -130,7 +130,7 @@ class BlogDisplay extends Display
 					$autor = User::findById($billet->__get('user_id'));
 					$html .= '<article><a href="Blog.php?a=detail&amp;id='.$billet->__get('id').'"><h2>'.$billet->__get('titre').
 						'</h2></a><p>'.nl2br($billet->__get('body')).'</p>
-						Auteur : <a href="Utilisateur.php?a=detail&amp;id='.$autor->__get('id').'">'.$autor->__get('speudo').'</a><br />
+						Auteur : <a href="Blog.php?a=detailUser&amp;id='.$autor->__get('id').'">'.$autor->__get('speudo').'</a><br />
 						Catégorie : <a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article>';
 					$first = false;
 				}
@@ -142,6 +142,42 @@ class BlogDisplay extends Display
 			}
 		}else{
 			$html = '<section>Pas de billets, admin pas faire beaulot, moi pas content :p</section>';
+		}
+		return $html;
+	}
+
+	
+	protected function listUsers()
+	{
+		if(!empty($this->data)){
+			$html = '<section><h2>Liste de tous les Utilisateurs</h2><ul>';
+			foreach ($this->data as $user) {
+				$html .= '<li><a href="Blog.php?a=detailUser&amp;id='.$user->__get('id').'">'.$user->__get('speudo').
+				'</a></li>';
+			}
+			$html .= '</ul></section>';
+		}else{
+			$html = '<section>Il n\'y aucun utilisateur pour l\'instant, hmm, si tu es admin, et que tu as accès a cette info, tu devrais revoir ton système</section>';
+		}
+		return $html;
+	}
+	
+	
+	protected function user()
+	{
+		$user = $this->data;
+		if(!empty($user)){
+			$html = '<section><h2>'.$user->__get('speudo').
+				'</h2>Rang : '.User::rang($user->__get('level')).'<br />';
+				try{
+					$billets = Billet::findByUSer_ID($user->__get('id'));
+					if(!empty($billets))
+						$html .= '<a href="Blog.php?a=autor&amp;id='.$user->__get('id').'">Voir tout ses posts</a></section>';
+				}catch(Exception $e){
+					$html .= "C'est ma faute, me tape pas :'(...</section>";
+				}
+		}else{
+			$html = '<section>Ah oui voici l\'utilisateur! ah non ce n\'était qu\'une illusion :(</section>';
 		}
 		return $html;
 	}

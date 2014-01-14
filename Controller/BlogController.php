@@ -7,6 +7,8 @@ class BlogController extends Controller
 		'detail' 	=> 'detailAction',
 		'cat' 		=> 'catAction',
 		'listCat'	=> 'listCatAction',
+		'listUser' 		=> 'listUserAction',
+		'detailUser' 	=> 'detailUserAction',
 		'autor'		=> 'userAction'
 	);
 		
@@ -91,7 +93,7 @@ class BlogController extends Controller
 			}else{
 				$user = User::findById($_GET['id']);
 				$display = new BlogDisplay($user);
-				$display->displayPage('userDetail');
+				$display->displayPage('autor');
 			}
 		}catch(Exception $e){
 			if(DEBUG)
@@ -111,6 +113,35 @@ class BlogController extends Controller
 			if(DEBUG)
 				throw $e; 
 			$error = 'Erreur lors de la récupération des billets';
+			$display = new Display($error);
+			$display->displayPage('error');
+		}
+	}
+	
+	public static function listUserAction(){
+		try{
+			$display = new UserDisplay(User::findAll());
+			$display->displayPage('listUsers');
+		}catch(Exception $e){
+			$error = 'Erreur lors de la récupération des utilisateurs';
+			$display = new Display($error);
+			$display->displayPage('error');
+		}
+	}	
+	
+	public static function detailUserAction(){
+		try{
+			if(!isset($_GET['id'])){
+				$error = 'Identifiant non valide';
+				$display = new Display($error);
+				$display->displayPage('error');
+			}else{				
+				$user = User::findById($_GET['id']);
+				$display = new BlogDisplay($user);
+				$display->displayPage('user');
+			}
+		}catch(Exception $e){
+			$error = 'Erreur lors de la récupération de l\'utilisateur';
 			$display = new Display($error);
 			$display->displayPage('error');
 		}

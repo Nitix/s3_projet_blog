@@ -27,6 +27,13 @@ class User {
 	 *  @var String
 	 */
 	private $speudo;
+	
+	/**
+	 *  Email de l'utilisateur
+	 *  @access private
+	 *  @var String
+	 */
+	 private $email;
 
 	/**
 	 *  Mot de passe de l'user 
@@ -126,7 +133,7 @@ class User {
 
 		$c = Base::getConnection();
 
-		$query = $c -> prepare("update user set speudo= ?, password= ?, level = ?, salt = ?
+		$query = $c -> prepare("update user set speudo= ?, password= ?, level = ?, salt = ?, email = ?
 				                   where id=?");
 
 		/*
@@ -136,7 +143,8 @@ class User {
 		$query -> bindParam(2, $this -> password, PDO::PARAM_STR);
 		$query -> bindParam(3, $this -> level, PDO::PARAM_INT);
 		$query -> bindParam(4, $this -> salt, PDO::PARAM_STR);
-		$query -> bindParam(5, $this -> id, PDO::PARAM_INT);
+		$query -> bindParam(5, $this -> email, PDO::PARAM_STR);
+		$query -> bindParam(6, $this -> id, PDO::PARAM_INT);
 
 		/*
 		 * exécution de la requête
