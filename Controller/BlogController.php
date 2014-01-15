@@ -1,7 +1,13 @@
 <?php
 	
+/**
+ * Gére les affichages utilisateurs
+ */
 class BlogController extends Controller
 {
+	/**
+	 * Liste des actions
+	 */
 	protected static $actions = array(
 		'list' 		=> 'listAction',
 		'detail' 	=> 'detailAction',
@@ -11,11 +17,17 @@ class BlogController extends Controller
 		'detailUser' 	=> 'detailUserAction',
 		'autor'		=> 'userAction'
 	);
-		
+	
+	/**
+	 * Action par défault, s'éxecute en cas d'action incorrect et en page de garde
+	 */
 	public static function home(){
 		self::last10BilletsAction();
 	}
 	
+	/**
+	 * Affiche la liste des billets
+	 */
 	public static function listAction(){
 		try{
 			$billets = Billet::findAll();
@@ -30,6 +42,9 @@ class BlogController extends Controller
 		}
 	}
 	
+	/**
+	 * Affiche le contenu détaillé du billet
+	 */
 	public static function detailAction(){
 		try{
 			if(!isset($_GET['id'])){
@@ -50,6 +65,9 @@ class BlogController extends Controller
 		}
 	}
 	
+	/**
+	 * Affiche le contenu de la catégorie
+	 */
 	public static function catAction(){
 		try{
 			if(!isset($_GET['id'])){
@@ -70,6 +88,9 @@ class BlogController extends Controller
 		}
 	}
 	
+	/**
+	 * Affiche la liste des catégories
+	 */
 	public static function listCatAction(){
 		try{
 			$cats = Categorie::findAll();
@@ -84,6 +105,9 @@ class BlogController extends Controller
 		}
 	}
 
+	/**
+	 * Affiche l'utilisateur demandée
+	 */
 	public static function userAction(){
 		try{
 			if(!isset($_GET['id'])){
@@ -104,6 +128,9 @@ class BlogController extends Controller
 		}
 	}		
 
+	/**
+	 * Affiche la liste des 10 derniers billets page d'accueil
+	 */
 	public static function last10BilletsAction(){
 		try{
 			$billets = Billet::findLastLimited(10);
@@ -118,6 +145,9 @@ class BlogController extends Controller
 		}
 	}
 	
+	/**
+	 * Affiche la liste des utilisateurs
+	 */
 	public static function listUserAction(){
 		try{
 			$display = new BlogDisplay(User::findAll());
@@ -129,6 +159,9 @@ class BlogController extends Controller
 		}
 	}	
 	
+	/**
+	 * Affiche les détails d'un utilisateurs
+	 */
 	public static function detailUserAction(){
 		try{
 			if(!isset($_GET['id'])){

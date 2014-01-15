@@ -1,5 +1,5 @@
 <?php
-
+//Appelle le controlleur Admin après vérification de son niveau
 require_once('common.php');
 
 try{

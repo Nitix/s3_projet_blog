@@ -238,6 +238,16 @@ class Categorie {
 		return $cats;
 	}
 
+	/**
+	 *   Finder sur Titre
+	 *
+	 *   Renvoie toutes les lignes de la table categorie
+	 *   sous la forme d'un tableau d'objet
+	 *
+	 *   @static
+	 *   @return Array renvoie un tableau de categorie
+	 */
+
 	public static function findByTitre($titre) {
 		$c = Base::getConnection();
 		$query = $c -> prepare("select * from categorie where titre = :titre");

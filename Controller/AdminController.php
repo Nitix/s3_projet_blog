@@ -1,8 +1,14 @@
 <?php
 	
+/**
+ * Gére le panneau d'administration permet de créer des nouveaux messages
+ */
 class AdminController extends Controller
 {
 
+	/**
+	 * Liste des actions
+	 */
 	protected static $actions = array(
 		'addM' 		=> 'AddMessage',
 		'saveM' 	=> 'saveMessage',
@@ -10,11 +16,19 @@ class AdminController extends Controller
 		'saveC' 	=> 'saveCategorie',
 	);
 	
+	/**
+	 * Action par défault, s'éxecute en cas d'action incorrect et en page de garde
+	 */
 	public static function home(){
 		$display = new AdminDisplay(null);
 		$display->displayPage('home');
 	} 
 	
+	/**
+	 * Affiche la page pour créer un nouveau message
+	 * les paramètres sont en cas d'erreur, pour remplir les inputs
+	 * 
+	 */
 	public static function addMessage($error = '', $titre = '', $contenu = '' ){
 		$data['contenu']	= $contenu;
 		$data['titre']		= $titre;
@@ -25,6 +39,10 @@ class AdminController extends Controller
 		$display->displayPage('newMessage');
 	}
 	
+	/**
+	 * Vérifie le nouveau message et l'enregistre
+	 * Affiche ensuite la confirmation
+	 */
 	public static function saveMessage(){
 		$data['contenu'] = '';
 		$data['titre']   = '';
@@ -75,6 +93,10 @@ class AdminController extends Controller
 		}	
 	}
 
+	/**
+	 * Affiche la page pour créer une nouvelle catégorie
+	 * les paramètres sont en cas d'erreur, pour remplir les inputs
+	 */
 	public static function addCategorie($error = '', $titre = '', $description = '' ){
 		$data['description'] = $description;
 		$data['titre']   = $titre;
@@ -84,6 +106,10 @@ class AdminController extends Controller
 		$display->displayPage('newCategorie');
 	}
 	
+	/**
+	 * Vérifie le nouveau message et l'enregistre
+	 * Affiche ensuite la confirmation
+	 */
 	public static function saveCategorie(){
 		$data['titre'] = '';
 		$data['description'] = '';

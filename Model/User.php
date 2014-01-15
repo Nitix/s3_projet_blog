@@ -9,6 +9,9 @@
  */
 class User {
 
+	/**
+	 * fait la correspondance entre le level et le nom
+	 */
 	private static $rang = array(
 		0 => 'Membre',
 		1 => 'Adminstrateur'
@@ -296,6 +299,14 @@ class User {
 		return $user;
 	}
 	
+	/**
+	 *
+	 *   Donne le nom du rang à partir d'un niveau
+	 *
+	 *   @static
+	 *   @param integer $level niveau d'authentification
+	 *   @return String niveau de l'utilisateur
+	 */
 	public static function rang($level = 0){
 		if(array_key_exists($level, self::$rang))
 			return self::$rang[$level];

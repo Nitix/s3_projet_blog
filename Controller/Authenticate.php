@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Gere tout control d'authentification avec l'utilisateur et ses droits
+ * Gere également l'inscription d'un utilisateur
+ */
 class Authenticate
 {
 	 // vérifier la conformité de $password avec la police

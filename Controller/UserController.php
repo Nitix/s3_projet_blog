@@ -1,8 +1,13 @@
 <?php
 	
+/**
+ * Controle les connexions/enregistrement d'un utilisateur
+ */
 class UserController extends Controller
 {
-
+	/**
+	 * Liste des actions
+	 */
 	protected static $actions = array(
 		'login' 		=> 'login',
 		'loginSend' 	=> 'connect',
@@ -10,10 +15,17 @@ class UserController extends Controller
 		'registerSend'	=> 'registerSend'
 	);
 	
+	/**
+	 * Action par défault, s'éxecute en cas d'action incorrect et en page de garde
+	 */
 	public static function home(){
 		self::login();
 	} 
 	
+	/**
+	 * Affiche la page de login
+	 * les paramètres sont en cas d'erreur, pour remplir les inputs
+	 */
 	public static function login($error = '', $speudo = ''){
 		$data['speudo']		= $speudo;
 		$data['error']		= $error;
@@ -21,6 +33,10 @@ class UserController extends Controller
 		$display->displayPage('login');
 	}
 	
+	/**
+	 * Vérifie les données des utilisateurs et affiche la confirmation de connection
+	 * sinon affiche la page de login avec un message d'erreur
+	 */
 	public static function connect(){
 		$speudo = '';
 		$password   = '';
@@ -40,6 +56,9 @@ class UserController extends Controller
 	}
 
 	
+	/**
+	 * Affiche la page d'enregistrement
+	 */
 	public static function register($error = '', $speudo = ''){
 		$data['speudo']		= $speudo;
 		$data['error']		= $error;
@@ -53,6 +72,10 @@ class UserController extends Controller
 		$display->displayPage('register');
 	}
 	
+	/**
+	 * Vérifie les données des utilisateurs et affiche la confirmation d'enregistrement
+	 * sinon affiche la page de login avec un message d'erreur
+	 */
 	public static function registerSend(){
 		$speudo = '';
 		$password   = '';
