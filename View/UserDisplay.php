@@ -25,6 +25,7 @@ class UserDisplay extends Display
 	{
 		return '';
 	}
+	
 	/**
 	 * Supprimer le menu de droite, non nécessaire pour la connexion
 	 * @return String vide
