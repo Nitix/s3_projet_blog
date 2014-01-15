@@ -336,7 +336,7 @@ class Billet {
 
 	public static function findLastLimited($nb){
 		$c = Base::getConnection();
-		$query = $c -> prepare("select * from billets order by date LIMIT :nb");
+		$query = $c -> prepare("select * from billets order by date DESC LIMIT :nb");
 		$query -> bindParam(":nb", $nb, PDO::PARAM_INT);
 		$dbres = $query -> execute();
 
