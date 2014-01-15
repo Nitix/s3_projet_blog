@@ -131,4 +131,7 @@ header > nav > ul  > li
 a{
 	color : green;
 }
-
+.comment
+{
+	height: 80px;
+}

@@ -272,7 +272,16 @@ class Billet {
 		}
 		return $billets;
 	}
-
+	/**
+	 *   Finder sur  titre
+	 *
+	 *   Retrouve les lignes de la table correspondant au ID passé en paramètre,
+	 *   retourne un objet
+	 *
+	 *   @static
+	 *   @param integer $id OID to find
+	 *   @return Comment renvoie un tableau de  Billets
+	 */
 	public static function findByTitre($titre) {
 		$c = Base::getConnection();
 		$query = $c -> prepare("select * from billets where titre = :titre");
@@ -293,6 +302,16 @@ class Billet {
 		return $billets;
 	}
 
+	/**
+	 *   Finder sur  cat_ID
+	 *
+	 *   Retrouve les lignes de la table correspondant au ID passé en paramètre,
+	 *   retourne un objet
+	 *
+	 *   @static
+	 *   @param integer $id OID to find
+	 *   @return Comment renvoie un tableau de  Billets
+	 */
 	public static function findByCat_ID($id) {
 		$c = Base::getConnection();
 		$query = $c -> prepare("select * from billets where cat_id = :cat_id");
@@ -312,7 +331,16 @@ class Billet {
 		}
 		return $billets;
 	}
-	
+	/**
+	 *   Finder sur  postID
+	 *
+	 *   Retrouve les lignes de la table correspondant au ID passé en paramètre,
+	 *   retourne un objet
+	 *
+	 *   @static
+	 *   @param integer $id OID to find
+	 *   @return Comment renvoie un tableau de  Billets
+	 */
 	public static function findByUSer_ID($id) {
 		$c = Base::getConnection();
 		$query = $c -> prepare("select * from billets where user_id = :user_id");
@@ -333,7 +361,16 @@ class Billet {
 		return $billets;
 	}
 	
-
+	/**
+	 *   Finder sur tout les billets limités à x
+	 *
+	 *   Retrouve les lignes de la table avec la limite x
+	 *   retourne un objet
+	 *
+	 *   @static
+	 *   @param integer $id OID to find
+	 *   @return Comment renvoie un tableau de  Billets
+	 */
 	public static function findLastLimited($nb){
 		$c = Base::getConnection();
 		$query = $c -> prepare("select * from billets order by date DESC LIMIT :nb");

@@ -15,7 +15,8 @@ class BlogController extends Controller
 		'listCat'	=> 'listCatAction',
 		'listUser' 		=> 'listUserAction',
 		'detailUser' 	=> 'detailUserAction',
-		'autor'		=> 'userAction'
+		'autor'		=> 'userAction',
+		'saveComment' => 'saveComment'
 	);
 	
 	/**
@@ -178,5 +179,58 @@ class BlogController extends Controller
 			$display = new Display($error);
 			$display->displayPage('error');
 		}
+	}
+	
+	/**
+	 * Enregistre le commentaire
+	 */
+	public static function saveComment(){		
+		if(isset($_POST['contenu'])&& isset($_POST['id']) && isset($_POST['jeton'])){
+			$contenu = htmlspecialchars($_POST['contenu']);
+			if(!empty($contenu)){	
+				if($_POST['jeton'] == $_SESSION['jeton']){
+					try{
+						$billet = Billet::findById($_POST['id']); 						
+						if(!empty($billet)){
+							$comment = new Comment();
+							$comment->__set('billet_id', $_POST['id']);
+							$comment->__set('user_id', $_SESSION['id']);
+							$comment->__set('contenu', $contenu);
+							$res = $comment->insert();
+							if($res){
+								$display = new BlogDisplay('');
+								$display->displayPage('commentEnregistre');	
+							}else{
+								$error = "Erreur lors de l'ajout";	
+								$display = new Display($error);
+								$display->displayPage('error');		
+							}
+						}else{
+							$error = "Erreur lors de l'ajout";	
+							$display = new Display($error);
+							$display->displayPage('error');	
+						}
+					}catch(Exception $e){
+						if(DEBUG)
+							throw $e; 
+						$error = "Erreur lors de l'ajout";	
+						$display = new Display($error);
+						$display->displayPage('error');
+					}
+				}else{
+					$error = 'Erreur - c\tétait moins une (hack)';
+					$display = new Display($error);
+					$display->displayPage('error');	
+				}
+			}else{
+				$error = 'Erreur - Contenu vide';
+				$display = new Display($error);
+				$display->displayPage('error');	
+			}
+		}else{
+			$error = 'Erreur';
+			$display = new Display($error);
+			$display->displayPage('error');	
+		}	
 	}
 }

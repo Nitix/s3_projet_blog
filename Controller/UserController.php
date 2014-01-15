@@ -12,7 +12,8 @@ class UserController extends Controller
 		'login' 		=> 'login',
 		'loginSend' 	=> 'connect',
 		'register' 		=> 'register',
-		'registerSend'	=> 'registerSend'
+		'registerSend'	=> 'registerSend',
+		'logout'		=> 'logout'
 	);
 	
 	/**
@@ -59,8 +60,9 @@ class UserController extends Controller
 	/**
 	 * Affiche la page d'enregistrement
 	 */
-	public static function register($error = '', $speudo = ''){
+	public static function register($error = '', $email = '', $speudo = ''){
 		$data['speudo']		= $speudo;
+		$data['email']		= $email;
 		$data['error']		= $error;
 		$policy = new \PasswordPolicy\Policy;
 		$policy->contains('lowercase', $policy->atLeast(1));
@@ -79,12 +81,13 @@ class UserController extends Controller
 	public static function registerSend(){
 		$speudo = '';
 		$password   = '';
+		$email = '';
 		if(isset($_POST['speudo']) && isset($_POST['password']) && isset($_POST['email'])){
 			$speudo		= htmlspecialchars($_POST['speudo']);
 			$password   = htmlspecialchars($_POST['password']);	
 			$email 		= htmlspecialchars($_POST['email']);
 			try{		
-				$res = Authenticate::createUser($speudo, $password, $email, $level);
+				$res = Authenticate::createUser($speudo, $password, $email, 0);
 				$display = new UserDisplay($speudo);
 				$display->displayPage('registerOK');
 			}catch(Exception $e){
@@ -93,5 +96,16 @@ class UserController extends Controller
 		}else{
 			self::register("Hackeur ?");
 		}	
+		
+	}
+	
+	/**
+	 * Deconnecte l'utilisateur et affiche la confirmation
+	 */
+	public static function logout(){
+		session_destroy();
+		session_start();
+		$display = new UserDisplay($data);
+		$display->displayPage('logout');
 	}
 }

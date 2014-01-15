@@ -38,7 +38,7 @@ class UserDisplay extends Display
 	
 	/**
 	 * Prépare l'affichage de la page de connexion
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 * 
 	 */
 	protected function login(){
@@ -58,7 +58,7 @@ class UserDisplay extends Display
 	
 	/**
 	 * Prépare l'affichage de la page de confirmation de connexion
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 */
 	protected function connectOK(){
 		return '<section class="login">Bienvenue '.$this->data.'<br /><br />Vous êtes maintenant connecté sur le site<br /><br /><a href ="Blog.php">Retour au site</a></section>';		
@@ -66,7 +66,7 @@ class UserDisplay extends Display
 	
 	/**
 	 * Prépare l'affichage de la page d'enregistrement
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 */
 	protected function register(){
 		$html = '<section class=login><h1>Enregistrement</h1>';
@@ -76,6 +76,8 @@ class UserDisplay extends Display
 			<div style="display: hidden" id="passworderror"></div>
 			<label for="speudo">speudo</label><br />
 			<input required autofocus class=speudo type="text" id="speudo" name="speudo" value="'.$this->data['speudo'].'"/><br />
+			<label for="email">email</label><br />
+			<input required autofocus class=email type="text" id="email" name="email" value="'.$this->data['email'].'"/><br />
 			<label for="password">mot de passe</label><br />
 			<input required class=password type="password" id="password" name="password"/><br />
 			<input type="submit" value="S\'enregistrer"/>
@@ -102,9 +104,17 @@ class UserDisplay extends Display
 
 	/**
 	 * Prépare l'affichage de la page de confirmation d'enregistrement
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 */
 	protected function registerOK(){
 		return '<section class="login">Bienvenue '.$this->data.'<br /><br />Vous êtes maintenant enregistré sur le site<br /><br /><a href ="Blog.php">Retour au site</a></section>';		
+	}
+
+	/**
+	 * Prépare l'affichage de la page de confirmation d'enregistrement
+	 * @return String contenu à afficher
+	 */
+	protected function logout(){
+		return '<section class="login">Vous êtes deconnectés<br /><br /><a href ="Blog.php">Retour au site</a></section>';		
 	}
 }

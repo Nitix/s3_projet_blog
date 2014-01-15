@@ -19,7 +19,7 @@ class Display{
 	
 	/**
 	 * Prépare l'affichage de la page de connexion
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 * 
 	 */
 	public function displayPage($action){
@@ -48,7 +48,9 @@ class Display{
 				echo '<li><a href="Utilisateur.php?a=login">Se connecter</a></li>
 				<li><a href="Utilisateur.php?a=register">S\'enregistrer</a></li>';
 			else {
-				echo '<li>Bienvenue '.$_SESSION['speudo'].'</li>';
+				echo '<li>Bienvenue '.$_SESSION['speudo'].'</li>
+					<li><a href="Utilisateur.php?a=logout">Se déconnecter</a></li>';
+				
 				try{
 					Authenticate::checkAccessRights(1);
 					echo '<li><a href="Admin.php">Administration</a></li>';
@@ -64,7 +66,7 @@ class Display{
 	
 	/**
 	 * Prépare l'affichage du menu de gauche
-	 * @return String menu à affiché
+	 * @return String menu à afficher
 	 * 
 	 */
 	protected function generateLeftMenu()
@@ -86,7 +88,7 @@ class Display{
 	
 	/**
 	 * Prépare l'affichage du menu de droite
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 * 
 	 */
 	protected function generateRightMenu()
@@ -112,7 +114,7 @@ class Display{
 	
 	/**
 	 * Prépare l'affichage de la page d'erreur
-	 * @return String erreur à affiché
+	 * @return String erreur à afficher
 	 * 
 	 */	
 	protected function error(){

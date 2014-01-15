@@ -15,8 +15,8 @@ class BlogDisplay extends Display
 	} 
 	
 	/**
-	 * Prépare l'affichage de la page détaillé d'un billet
-	 * @return String contenu à affiché
+	 * Prépare l'affichage de la page détaillé d'un billet et affiche les commentaires
+	 * @return String contenu à afficher
 	 * 
 	 */
 	protected function billet()
@@ -30,7 +30,23 @@ class BlogDisplay extends Display
 					'</h2><p>'.nl2br($billet->__get('body')).'</p>
 					Date : '.date("d/m/y G:i", strtotime($billet->__get('date'))).'<br />
 					Auteur : <a href="Blog.php?a=detailUser&amp;id='.$autor->__get('id').'">'.$autor->__get('speudo').'</a><br />
-					Catégorie : <a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article></section>';
+					Catégorie : <a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article>';
+				if(isset($_SESSION['id'])){
+					$html .= '<hr /><div><form method="post" action="Blog.php?a=saveComment">
+					<input type="hidden" name="jeton" value="'.$_SESSION['jeton'].'" />
+					<input type="hidden" name="id" value="'.$billet->__get('id').'" />
+					<textarea class=comment name="contenu" required></textarea>
+					<input type="submit" value="Commenter" />
+					</form>';
+				}
+				$comments = Comment::findAll();
+				foreach ($comments as $comment) {
+					$user = User::findById($comment->__get('user_id'));
+					$html .= '<hr />';
+					$html .= 'Commenteur : <a href="Blog.php?a=detailUser&amp;id='.$comment->__get('user_id').'">'.$user->__get('speudo').'</a>
+					<p>'.nl2br($comment->__get('contenu')).'</p>';
+				}
+				$html .= '</section>';	
 			}catch(Exception $e){
 				if(DEBUG)
 					throw $e; 
@@ -45,7 +61,7 @@ class BlogDisplay extends Display
 	
 	/**
 	 * Prépare l'affichage de la page de la liste des billets
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 * 
 	 */
 	protected function listBillets()
@@ -72,7 +88,7 @@ class BlogDisplay extends Display
 	
 	/**
 	 * Prépare l'affichage de la page détailllé de la catégorie 
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 * 
 	 */
 	protected function catDetail(){
@@ -102,7 +118,7 @@ class BlogDisplay extends Display
 	
 	/**
 	 * Prépare l'affichage de la page de la liste des catégorie
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 * 
 	 */
 	protected function listCats(){
@@ -121,7 +137,7 @@ class BlogDisplay extends Display
 	
 	/**
 	 * Prépare l'affichage de la page de la liste des billets d'un auteur
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 * 
 	 */
 	protected function autor(){
@@ -151,7 +167,7 @@ class BlogDisplay extends Display
 
 	/**
 	 * Prépare l'affichage de la page d'accueil
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 * 
 	 */
 	protected function last10billets()
@@ -175,7 +191,7 @@ class BlogDisplay extends Display
 
 	/**
 	 * Prépare l'affichage de la page de la liste des utilisateurs
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 * 
 	 */
 	protected function listUsers()
@@ -195,7 +211,7 @@ class BlogDisplay extends Display
 	
 	/**
 	 * Prépare l'affichage de la page détaillé d'un utilisateur
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 * 
 	 */
 	protected function user()
@@ -217,5 +233,14 @@ class BlogDisplay extends Display
 			$html = '<section>Ah oui voici l\'utilisateur! ah non ce n\'était qu\'une illusion :(</section>';
 		}
 		return $html;
+	}
+	
+	/**
+	 * Prépare l'affichage de la page de confirmation d'enregistrement du commentaire
+	 * @return String contenu à afficher
+	 * 
+	 */
+	protected function commentEnregistre(){
+		return '<section>Commentaire enregistré</section>';
 	}
 }

@@ -45,7 +45,7 @@ class AdminDisplay extends Display {
 	
 	/**
 	 * Prépare l'affichage de la page de création d'un nouveau message
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 * 
 	 */
 	private function newMessage(){
@@ -75,7 +75,7 @@ class AdminDisplay extends Display {
 	
 	/**
 	 * Prépare l'affichage de la page de confirmation d'enregistrement de message
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 * 
 	 */
 	private function messageEnregistre(){
@@ -84,7 +84,7 @@ class AdminDisplay extends Display {
 	
 	/**
 	 * Prépare l'affichage de la page d'acceuil adminstrateur
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 * 
 	 */
 	private function home(){
@@ -93,7 +93,7 @@ class AdminDisplay extends Display {
 
 	/**
 	 * Prépare l'affichage du menu de gauche
-	 * @return String menu à affiché
+	 * @return String menu à afficher
 	 * 
 	 */
 	protected function generateLeftMenu(){
@@ -115,7 +115,7 @@ class AdminDisplay extends Display {
 
 	/**
 	 * Prépare l'affichage de la page d'ajout de catégorie
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 * 
 	 */
 	private function newCategorie(){
@@ -136,7 +136,7 @@ class AdminDisplay extends Display {
 	
 	/**
 	 * Prépare l'affichage de la page de confirmation de nouvelle catégorie
-	 * @return String contenu à affiché
+	 * @return String contenu à afficher
 	 * 
 	 */
 	private function categorieEnregistre(){
