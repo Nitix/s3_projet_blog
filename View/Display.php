@@ -46,7 +46,7 @@ class Display{
 			<li><a href="Blog.php?a=listUser">Liste des utilisateurs</a></li>';
 			if(!isset($_SESSION['id']))
 				echo '<li><a href="Utilisateur.php?a=login">Se connecter</a></li>
-				<li><a href="Utilisateur.php?a=login">S\'enregistrer</a></li>';
+				<li><a href="Utilisateur.php?a=register">S\'enregistrer</a></li>';
 			else {
 				echo '<li>Bienvenue '.$_SESSION['speudo'].'</li>';
 				try{

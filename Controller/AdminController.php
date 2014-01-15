@@ -61,6 +61,7 @@ class AdminController extends Controller
 								$billet->__set('titre', $data['titre']);
 								$billet->__set('body', $data['contenu']);
 								$billet->__set('cat_id', $data['cat_id']);
+								$billet->__set('user_id', $_SESSION['id']);
 								$billet->__set('date', date("Y-m-d H:i:s"));
 								$res = $billet->insert();
 								if($res){

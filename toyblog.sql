@@ -82,7 +82,7 @@ INSERT INTO `categorie` (`id`, `titre`, `description`) VALUES
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `speudo` varchar(64) NOT NULL,
-  `email` varchar(64) NOT NULL
+  `email` varchar(64) NOT NULL,
   `password` varchar(68) NOT NULL,
   `level` int(11) NOT NULL,
   `salt` varchar(64) NOT NULL,

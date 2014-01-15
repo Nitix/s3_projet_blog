@@ -28,6 +28,7 @@ class BlogDisplay extends Display
 				$autor = User::findById($billet->__get('user_id'));
 				$html = '<section><article><h2>'.$billet->__get('titre').
 					'</h2><p>'.nl2br($billet->__get('body')).'</p>
+					Date : '.date("d/m/y G:i", strtotime($billet->__get('date'))).'<br />
 					Auteur : <a href="Blog.php?a=detailUser&amp;id='.$autor->__get('id').'">'.$autor->__get('speudo').'</a><br />
 					Catégorie : <a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></article></section>';
 			}catch(Exception $e){
