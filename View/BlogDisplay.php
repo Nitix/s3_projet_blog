@@ -2,12 +2,23 @@
 
 class BlogDisplay extends Display
 {
+	/**
+	 * Données données par le controller
+	 */
 	private $data;	
 	
+	/**
+	 * Contructeur avec les données à afficher
+	 */
 	public function __construct($data) {
 		$this->data = $data;
 	} 
 	
+	/**
+	 * Prépare l'affichage de la page détaillé d'un billet
+	 * @return String contenu à affiché
+	 * 
+	 */
 	protected function billet()
 	{
 		$billet = $this->data;
@@ -31,6 +42,11 @@ class BlogDisplay extends Display
 		return $html;
 	}
 	
+	/**
+	 * Prépare l'affichage de la page de la liste des billets
+	 * @return String contenu à affiché
+	 * 
+	 */
 	protected function listBillets()
 	{
 		if(!empty($this->data)){
@@ -53,6 +69,11 @@ class BlogDisplay extends Display
 		return $html;
 	}
 	
+	/**
+	 * Prépare l'affichage de la page détailllé de la catégorie 
+	 * @return String contenu à affiché
+	 * 
+	 */
 	protected function catDetail(){
 		if(!empty($this->data)){
 			$html = '<section><p>Liste de tous les billets dans la catégorie '.$this->data->__get('titre').'</p>Desciption : '.$this->data->__get('description').'<br />';
@@ -78,6 +99,11 @@ class BlogDisplay extends Display
 		return $html;		
 	}
 	
+	/**
+	 * Prépare l'affichage de la page de la liste des catégorie
+	 * @return String contenu à affiché
+	 * 
+	 */
 	protected function listCats(){
 		if(!empty($this->data)){
 			$html = '<section><table><caption>Liste de toutes les catégories</caption><tr><th>Titre</th><th>Description</th></tr>';
@@ -92,6 +118,11 @@ class BlogDisplay extends Display
 		return $html;
 	}
 	
+	/**
+	 * Prépare l'affichage de la page de la liste des billets d'un auteur
+	 * @return String contenu à affiché
+	 * 
+	 */
 	protected function autor(){
 		if(!empty($this->data)){
 			$html = '<section><p>Liste de tous les billets de l\'auteur '.$this->data->__get('speudo').'</p><br />';
@@ -117,6 +148,11 @@ class BlogDisplay extends Display
 		return $html;		
 	}
 
+	/**
+	 * Prépare l'affichage de la page d'accueil
+	 * @return String contenu à affiché
+	 * 
+	 */
 	protected function last10billets()
 	{
 		if(!empty($this->data)){
@@ -136,7 +172,11 @@ class BlogDisplay extends Display
 		return $html;
 	}
 
-	
+	/**
+	 * Prépare l'affichage de la page de la liste des utilisateurs
+	 * @return String contenu à affiché
+	 * 
+	 */
 	protected function listUsers()
 	{
 		if(!empty($this->data)){
@@ -152,7 +192,11 @@ class BlogDisplay extends Display
 		return $html;
 	}
 	
-	
+	/**
+	 * Prépare l'affichage de la page détaillé d'un utilisateur
+	 * @return String contenu à affiché
+	 * 
+	 */
 	protected function user()
 	{
 		$user = $this->data;

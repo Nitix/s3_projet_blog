@@ -1,13 +1,27 @@
 <?php
 
+/**
+ * Gere l'affichage de façon générale
+ */
 class Display{
 		
+	/**
+	 * Données données par le controller
+	 */
 	private $data;	
 	
+	/**
+	 * Contructeur avec les données à afficher
+	 */
 	public function __construct($data) {
 		$this->data = $data;
 	} 
 	
+	/**
+	 * Prépare l'affichage de la page de connexion
+	 * @return String contenu à affiché
+	 * 
+	 */
 	public function displayPage($action){
 		try{
 			$body = $this->$action();
@@ -48,7 +62,11 @@ class Display{
 	</html>';
 	}
 	
-	
+	/**
+	 * Prépare l'affichage du menu de gauche
+	 * @return String menu à affiché
+	 * 
+	 */
 	protected function generateLeftMenu()
 	{
 		$html = '<nav class=menu>Les Catégories<br />'; 
@@ -66,6 +84,11 @@ class Display{
 		return $html;
 	}
 	
+	/**
+	 * Prépare l'affichage du menu de droite
+	 * @return String contenu à affiché
+	 * 
+	 */
 	protected function generateRightMenu()
 	{
 		$html = '<nav class=menu>Liste des 10 derniers billets<br />';
@@ -87,7 +110,11 @@ class Display{
 		return $html;
 	}
 	
-		
+	/**
+	 * Prépare l'affichage de la page d'erreur
+	 * @return String erreur à affiché
+	 * 
+	 */	
 	protected function error(){
 		return '<section><div class="error">'.$this->data.'</div></section>';
 	}

@@ -1,24 +1,45 @@
 <?php
 
+/**
+ * Gére l'affichage de l'utilisateur
+ */
 class UserDisplay extends Display
 {
-	
+	/**
+	 * Données données par le controller
+	 */
 	private $data;	
 	
+	/**
+	 * Contructeur avec les données à afficher
+	 */
 	public function __construct($data) {
 		$this->data = $data;
 	} 
 	
+	/**
+	 * Supprimer le menu de gauche, non nécessaire pour la connexion
+	 * @return String vide
+	 */
 	protected function generateLeftMenu()
 	{
 		return '';
 	}
-	
+	/**
+	 * Supprimer le menu de droite, non nécessaire pour la connexion
+	 * @return String vide
+	 * 
+	 */	
 	protected function generateRightMenu()
 	{
 		return '';
 	}
 	
+	/**
+	 * Prépare l'affichage de la page de connexion
+	 * @return String contenu à affiché
+	 * 
+	 */
 	protected function login(){
 		$html = '<section class=login><h1>Connexion</h1>';
 
@@ -34,10 +55,18 @@ class UserDisplay extends Display
 			return $html;
 	}
 	
+	/**
+	 * Prépare l'affichage de la page de confirmation de connexion
+	 * @return String contenu à affiché
+	 */
 	protected function connectOK(){
 		return '<section class="login">Bienvenue '.$this->data.'<br /><br />Vous êtes maintenant connecté sur le site<br /><br /><a href ="Blog.php">Retour au site</a></section>';		
 	}
 	
+	/**
+	 * Prépare l'affichage de la page d'enregistrement
+	 * @return String contenu à affiché
+	 */
 	protected function register(){
 		$html = '<section class=login><h1>Enregistrement</h1>';
 		if(!empty($this->data['error']))
@@ -70,6 +99,10 @@ class UserDisplay extends Display
 			return $html;
 	}
 
+	/**
+	 * Prépare l'affichage de la page de confirmation d'enregistrement
+	 * @return String contenu à affiché
+	 */
 	protected function registerOK(){
 		return '<section class="login">Bienvenue '.$this->data.'<br /><br />Vous êtes maintenant enregistré sur le site<br /><br /><a href ="Blog.php">Retour au site</a></section>';		
 	}

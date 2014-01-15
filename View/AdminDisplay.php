@@ -1,16 +1,25 @@
 <?php
 
 /**
- * 
+ * Gére l'affichage des interfaces admin
  */
 class AdminDisplay extends Display {
 	
+	/**
+	 * Données données par le controller
+	 */
 	private $data;	
 	
+	/**
+	 * Contructeur avec les données à afficher
+	 */
 	function __construct($data) {
 		$this->data = $data;
 	} 
 	
+	/**
+	 * Affiche la page de base html
+	 */
 	public function displayPage($action){
 		try{
 			$body = $this->$action();
@@ -34,6 +43,11 @@ class AdminDisplay extends Display {
 	</html>';
 	}
 	
+	/**
+	 * Prépare l'affichage de la page de création d'un nouveau message
+	 * @return String contenu à affiché
+	 * 
+	 */
 	private function newMessage(){
 		$html = '<section class=adminPanel><h1>Nouveau message</h1>';
 		if(!empty($this->data['categories'])){
@@ -59,21 +73,51 @@ class AdminDisplay extends Display {
 		return $html;
 	}
 	
+	/**
+	 * Prépare l'affichage de la page de confirmation d'enregistrement de message
+	 * @return String contenu à affiché
+	 * 
+	 */
 	private function messageEnregistre(){
 		return '<section class=adminPanel>Message enregistrée</section>';
 	}
 	
+	/**
+	 * Prépare l'affichage de la page d'acceuil adminstrateur
+	 * @return String contenu à affiché
+	 * 
+	 */
 	private function home(){
 		return '<section class=adminPanel>Selectionnez une action sur le menu de gauche</section>';
 	}
 
+	/**
+	 * Prépare l'affichage du menu de gauche
+	 * @return String menu à affiché
+	 * 
+	 */
 	protected function generateLeftMenu(){
 		return '<nav class=menu><ul>
 			<li><a href="Admin.php?a=addM">Ajouter un message</a></li>
 			<li><a href="Admin.php?a=addC">Ajouter une catégorie</a></li>
 			<li><a href="Blog.php">Retour au site</a></li></ul></nav>';
 	}
+	
+	/**
+	 * Supprimer le menu de droite, non nécessaire pour la connexion
+	 * @return String vide
+	 * 
+	 */	
+	protected function generateRightMenu()
+	{
+		return '';
+	}
 
+	/**
+	 * Prépare l'affichage de la page d'ajout de catégorie
+	 * @return String contenu à affiché
+	 * 
+	 */
 	private function newCategorie(){
 		$html = '<section class=adminPanel><h1>Nouvelle catégorie</h1>';
 
@@ -90,6 +134,11 @@ class AdminDisplay extends Display {
 			return $html;
 	}
 	
+	/**
+	 * Prépare l'affichage de la page de confirmation de nouvelle catégorie
+	 * @return String contenu à affiché
+	 * 
+	 */
 	private function categorieEnregistre(){
 		return '<section class=adminPanel>Catégorie enregistrée</section>';
 	}
