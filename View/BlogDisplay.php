@@ -39,12 +39,16 @@ class BlogDisplay extends Display
 					<input type="submit" value="Commenter" />
 					</form>';
 				}
-				$comments = Comment::findAll();
+				$comments = Comment::findByBillet_ID($billet->__get('id'));
 				foreach ($comments as $comment) {
 					$user = User::findById($comment->__get('user_id'));
 					$html .= '<hr />';
+					if(!empty($user)){
 					$html .= 'Commenteur : <a href="Blog.php?a=detailUser&amp;id='.$comment->__get('user_id').'">'.$user->__get('speudo').'</a>
 					<p>'.nl2br($comment->__get('contenu')).'</p>';
+					}else{
+						$html .= 'Commenteur : Supprimé <br /><p>'.nl2br($comment->__get('contenu')).'</p>';
+					}
 				}
 				$html .= '</section>';	
 			}catch(Exception $e){

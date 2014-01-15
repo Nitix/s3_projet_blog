@@ -288,7 +288,7 @@ class Comment {
 	 *   @param integer $id OID to find
 	 *   @return Array renvoie un tableau de categorie
 	 */
-	public static function findByPost_ID($id) {
+	public static function findByBillet_ID($id) {
 		$c = Base::getConnection();
 		$query = $c -> prepare("select * from comment where billet_id = :billet_id");
 		$query -> bindParam(":billet_id", $id, PDO::PARAM_INT);
