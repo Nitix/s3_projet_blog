@@ -85,7 +85,7 @@ class BlogDisplay extends Display
 				$html .= '<tr><td><a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a></td>
 				<td>'.$cat->__get('description').'</a></td></td>';
 			}
-			$html .= '</section>';
+			$html .= '</table></section>';
 		}else{
 			$html = '<section>Catégories pas exister, toi contacter Adminstrateur, toi gentil, toi merci</section>';
 		}
@@ -163,10 +163,11 @@ class BlogDisplay extends Display
 				try{
 					$billets = Billet::findByUSer_ID($user->__get('id'));
 					if(!empty($billets))
-						$html .= '<a href="Blog.php?a=autor&amp;id='.$user->__get('id').'">Voir tout ses posts</a></section>';
+						$html .= '<a href="Blog.php?a=autor&amp;id='.$user->__get('id').'">Voir tout ses posts</a>';
 				}catch(Exception $e){
-					$html .= "C'est ma faute, me tape pas :'(...</section>";
+					$html .= "C'est ma faute, me tape pas :'(...";
 				}
+				$html .= "</section>";
 		}else{
 			$html = '<section>Ah oui voici l\'utilisateur! ah non ce n\'était qu\'une illusion :(</section>';
 		}

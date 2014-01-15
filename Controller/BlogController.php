@@ -120,7 +120,7 @@ class BlogController extends Controller
 	
 	public static function listUserAction(){
 		try{
-			$display = new UserDisplay(User::findAll());
+			$display = new BlogDisplay(User::findAll());
 			$display->displayPage('listUsers');
 		}catch(Exception $e){
 			$error = 'Erreur lors de la récupération des utilisateurs';

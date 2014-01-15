@@ -68,7 +68,7 @@ class AdminDisplay extends Display {
 	}
 
 	protected function generateLeftMenu(){
-		return '<nav><ul>
+		return '<nav class=menu><ul>
 			<li><a href="Admin.php?a=addM">Ajouter un message</a></li>
 			<li><a href="Admin.php?a=addC">Ajouter une catégorie</a></li>
 			<li><a href="Blog.php">Retour au site</a></li></ul></nav>';

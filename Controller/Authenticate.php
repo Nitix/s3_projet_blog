@@ -80,7 +80,7 @@ class Authenticate
 	//	 si Authentication::$profil['level] < $required
 	// throw new AuthException ;
 	public static function checkAccessRights ( $required ) {
-		if(isset($_SESSION['level']) && $_SESSION['level'] > $required)
+		if(isset($_SESSION['level']) && $_SESSION['level'] >= $required)
 			return true;
 		else {
 			throw new Exception("Incorrect level", 99);
