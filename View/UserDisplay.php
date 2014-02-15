@@ -47,11 +47,13 @@ class UserDisplay extends Display
 		if(!empty($this->data['error']))
 			$html .= '<div>'.$this->data['error'].'</div>';
 		$html .= '<form method="post" action="Utilisateur.php?a=loginSend">
+			<div class="form-group">
 			<label for="speudo">speudo</label><br />
 			<input required autofocus class=speudo type="text" id="speudo" name="speudo" value="'.$this->data['speudo'].'"/><br />
 			<label for="password">mot de passe</label><br />
 			<input required class=password type="password" id="password" name="password"/><br />
-			<input type="submit" value="Se connecter" />
+			</div>
+			<input type="submit" class="btn btn-default" value="Se connecter" />
 			</form></section>';
 			return $html;
 	}
@@ -61,7 +63,7 @@ class UserDisplay extends Display
 	 * @return String contenu à afficher
 	 */
 	protected function connectOK(){
-		return '<section class="login">Bienvenue '.$this->data.'<br /><br />Vous êtes maintenant connecté sur le site<br /><br /><a href ="Blog.php">Retour au site</a></section>';		
+		return '<section class="login col-xs-12">Bienvenue '.$this->data.'<br /><br />Vous êtes maintenant connecté sur le site<br /><br /><a href ="Blog.php">Retour au site</a></section>';		
 	}
 	
 	/**
@@ -73,6 +75,7 @@ class UserDisplay extends Display
 		if(!empty($this->data['error']))
 			$html .= '<div>'.$this->data['error'].'</div>';
 		$html .= '<form id="form" method="post" action="Utilisateur.php?a=registerSend" onsubmit="return checkPassword()">
+			<div class="form-group">
 			<div style="display: hidden" id="passworderror"></div>
 			<label for="speudo">speudo</label><br />
 			<input required autofocus class=speudo type="text" id="speudo" name="speudo" value="'.$this->data['speudo'].'"/><br />
@@ -80,7 +83,8 @@ class UserDisplay extends Display
 			<input required autofocus class=email type="text" id="email" name="email" value="'.$this->data['email'].'"/><br />
 			<label for="password">mot de passe</label><br />
 			<input required class=password type="password" id="password" name="password"/><br />
-			<input type="submit" value="S\'enregistrer"/>
+			</div>
+			<input type="submit" class="btn btn-default" value="S\'enregistrer"/>
 			</form></section><script>
 			 function checkPassword(){
 			 	var policy = '.$this->data['js'].';
@@ -107,7 +111,7 @@ class UserDisplay extends Display
 	 * @return String contenu à afficher
 	 */
 	protected function registerOK(){
-		return '<section class="login">Bienvenue '.$this->data.'<br /><br />Vous êtes maintenant enregistré sur le site<br /><br /><a href ="Blog.php">Retour au site</a></section>';		
+		return '<section class="login col-xs-12">Bienvenue '.$this->data.'<br /><br />Vous êtes maintenant enregistré sur le site<br /><br /><a href ="Blog.php">Retour au site</a></section>';		
 	}
 
 	/**
@@ -115,6 +119,6 @@ class UserDisplay extends Display
 	 * @return String contenu à afficher
 	 */
 	protected function logout(){
-		return '<section class="login">Vous êtes deconnectés<br /><br /><a href ="Blog.php">Retour au site</a></section>';		
+		return '<section class="login col-xs-12">Vous êtes deconnectés<br /><br /><a href ="Blog.php">Retour au site</a></section>';		
 	}
 }

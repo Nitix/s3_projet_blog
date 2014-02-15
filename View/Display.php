@@ -33,33 +33,50 @@ class Display{
 	echo '<!DOCTYPE html>
 	<html lang="fr">
 		<head>
+			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<meta charset="utf-8">
 			<title>Projet Blog</title>
-			<link rel="stylesheet" href="data/css/site.css"/>
+			<link rel="stylesheet" href="data/css/bootstrap.css"/>
+			<link rel="stylesheet" href="data/css/bootstrap-theme.css"/>
+			<link rel="stylesheet" href="data/css/perso.css"/>
+			<script src="data/js/jquery-2.1.0.min.js"></script>			
+			<script src="data/js/bootstrap.min.js"></script>
 		</head>
 		<body>
-			<header>Bienvenue le BLOG<br />Ici on parle de tout et de rien, de rien surtout
-			<nav><ul>
-			<li><a href="Blog.php">Accueil</a></li>
-			<li><a href="Blog.php?a=list">Liste des billets</a></li>
-			<li><a href="Blog.php?a=listCat">Liste des catégorie</a></li>
-			<li><a href="Blog.php?a=listUser">Liste des utilisateurs</a></li>';
-			if(!isset($_SESSION['id']))
-				echo '<li><a href="Utilisateur.php?a=login">Se connecter</a></li>
-				<li><a href="Utilisateur.php?a=register">S\'enregistrer</a></li>';
-			else {
-				echo '<li>Bienvenue '.$_SESSION['speudo'].'</li>
-					<li><a href="Utilisateur.php?a=logout">Se déconnecter</a></li>';
-				
-				try{
-					Authenticate::checkAccessRights(1);
-					echo '<li><a href="Admin.php">Administration</a></li>';
-				}catch(Exception $e){}
-			}
-			echo '</ul></nav>
+			<header><div class="well"><div class="page-header"><h1>Bienvenue le BLOG<br /><small>Ici on parle de tout et de rien, de rien surtout</small></h1></div></div>
+			<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container-fluid">
+				<div class="col-md-offset-3 ">
+				<div class="navbar-header">
+				  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+				  <a class="navbar-brand" href="Blog.php">Blog</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><ul class="nav navbar-nav" >
+				<li><a href="Blog.php">Accueil</a></li>
+				<li><a href="Blog.php?a=list">Liste des billets</a></li>
+				<li><a href="Blog.php?a=listCat">Liste des catégorie</a></li>
+				<li><a href="Blog.php?a=listUser">Liste des utilisateurs</a></li>';
+				if(!isset($_SESSION['id']))
+					echo '<li><a href="Utilisateur.php?a=login">Se connecter</a></li>
+					<li><a href="Utilisateur.php?a=register">S\'enregistrer</a></li>';
+				else {
+					echo '<li>Bienvenue '.$_SESSION['speudo'].'</li>
+						<li><a href="Utilisateur.php?a=logout">Se déconnecter</a></li>';
+					
+					try{
+						Authenticate::checkAccessRights(1);
+						echo '<li><a href="Admin.php">Administration</a></li>';
+					}catch(Exception $e){}
+				}
+				echo '</ul></div></div></div></nav>
 			</header>
-			<div id="conteneur">'.$this->generateLeftMenu().$body.$this->generateRightMenu().'</div><br />
-			<footer>Ecris par Guillaume Pierson et Jordane Mahout</footer>
+			<div class="container-fluid">'.$this->generateLeftMenu().$body.$this->generateRightMenu().'</div><br />
+			<footer class="row"><div class="well center">Ecris par Guillaume Pierson et Jordane Mahout</div></footer>
 		</body>
 	</html>';
 	}
@@ -71,18 +88,18 @@ class Display{
 	 */
 	protected function generateLeftMenu()
 	{
-		$html = '<nav class=menu>Les Catégories<br />'; 
+		$html = '<nav class="col-xs-12 col-md-3"><div class="list-group"><span class="list-group-item">Les Catégories</span>';        
 		try{
 			$cats = Categorie::findAll();
 			foreach ($cats as $cat) {
-				$html .= '<a href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a><br />';
+				$html .= '<a class="list-group-item" href="Blog.php?a=cat&amp;id='.$cat->__get('id').'">'.$cat->__get('titre').'</a>';
 			}
 		}catch(Exception $e){
 			if(DEBUG)
 				throw $e; 
 			$html .= 'Erreur à la récupération des catégories';
 		}
-		$html .= '</nav>';
+		$html .= ' </div></nav>';
 		return $html;
 	}
 	
@@ -93,12 +110,12 @@ class Display{
 	 */
 	protected function generateRightMenu()
 	{
-		$html = '<nav class=menu>Liste des 10 derniers billets<br />';
+		$html = '<nav class="col-xs-12 col-md-3"><div class="list-group"><span class="list-group-item">Liste des 10 derniers billets</span>';
 		try{
 			$billets = Billet::findLastLimited(10);
 			if(!empty($billets)){
 				foreach ($billets as $billet) {
-						$html .= '<a href="Blog.php?a=detail&amp;id='.$billet->__get('id').'">'.$billet->__get('titre').'</a><br />';
+						$html .= '<a class="list-group-item" href="Blog.php?a=detail&amp;id='.$billet->__get('id').'">'.$billet->__get('titre').'</a>';
 				}
 			}else{
 				$html = 'LOL, il n\'y a pas de billets...';
@@ -108,7 +125,7 @@ class Display{
 				throw $e; 
 			$html .= 'Erreur à la récupération des billets';
 		}
-		$html .= '</nav>';
+		$html .= '</div></nav>';
 		return $html;
 	}
 	
