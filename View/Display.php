@@ -33,7 +33,7 @@ class Display{
 	echo '<!DOCTYPE html>
 	<html lang="fr">
 		<head>
-			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 			<meta charset="utf-8">
 			<title>Projet Blog</title>
 			<link rel="stylesheet" href="data/css/bootstrap.css"/>
