@@ -76,7 +76,7 @@ class Display{
 				echo '</ul></div></div></div></nav>
 			</header>
 			<div class="container-fluid">'.$this->generateLeftMenu().$body.$this->generateRightMenu().'</div><br />
-			<footer class="row"><div class="well center">Ecris par Guillaume Pierson et Jordane Mahout</div></footer>
+			<footer><div class="well center well-sm">Ecris par Guillaume Pierson et Jordane Mahout</div></footer>
 		</body>
 	</html>';
 	}
